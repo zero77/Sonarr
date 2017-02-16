@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.SQLite;
+using System.Linq;
 using System.Threading;
 using FluentAssertions;
 using Marr.Data;
@@ -22,6 +24,19 @@ namespace NzbDrone.Core.Test.Instrumentation
 
         protected override MigrationType MigrationType => MigrationType.Log;
 
+        private void WaitForDatabase()
+        {
+            for (var i = 0; i < 20; i++)
+            {
+                if (AllStoredModels.Any())
+                {
+                    break;
+                }
+
+                Thread.Sleep(100);
+            }
+        }
+
         [SetUp]
         public void Setup()
         {
@@ -40,7 +55,7 @@ namespace NzbDrone.Core.Test.Instrumentation
         {
             _logger.Info(_uniqueMessage);
 
-            Thread.Sleep(600);
+            WaitForDatabase();
 
             StoredModel.Message.Should().Be(_uniqueMessage);
             VerifyLog(StoredModel, LogLevel.Info);
@@ -57,7 +72,7 @@ namespace NzbDrone.Core.Test.Instrumentation
 
             _logger.Info(message);
 
-            Thread.Sleep(600);
+            WaitForDatabase();
 
             StoredModel.Message.Should().HaveLength(message.Length);
             StoredModel.Message.Should().Be(message);
@@ -76,7 +91,7 @@ namespace NzbDrone.Core.Test.Instrumentation
                 _logger.Info(Guid.NewGuid());
             }
 
-            Thread.Sleep(600);
+            WaitForDatabase();
 
             MapRepository.Instance.EnableTraceLogging = true;
         }
@@ -88,7 +103,7 @@ namespace NzbDrone.Core.Test.Instrumentation
 
             _logger.Error(ex, _uniqueMessage);
 
-            Thread.Sleep(600);
+            WaitForDatabase();
 
             VerifyLog(StoredModel, LogLevel.Error);
             StoredModel.Message.Should().Be(_uniqueMessage + ": " + ex.Message);
@@ -106,7 +121,7 @@ namespace NzbDrone.Core.Test.Instrumentation
 
             _logger.Error(ex, _uniqueMessage);
 
-            Thread.Sleep(600);
+            WaitForDatabase();
 
             StoredModel.Message.Should().Be(ex.Message);
 
@@ -121,7 +136,7 @@ namespace NzbDrone.Core.Test.Instrumentation
             var epFile = new EpisodeFile();
             _logger.Debug("File {0} no longer exists on disk. removing from database.", epFile.RelativePath);
 
-            Thread.Sleep(600);
+            WaitForDatabase();
 
             epFile.RelativePath.Should().BeNull();
         }
@@ -130,6 +145,7 @@ namespace NzbDrone.Core.Test.Instrumentation
         [TearDown]
         public void Teardown()
         {
+            SQLiteConnection.ClearAllPools();
             Mocker.Resolve<DatabaseTarget>().UnRegister();
         }
 

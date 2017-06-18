@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Sonarr.Http.REST;
-using NzbDrone.Core.Parser;
-using NzbDrone.Core.Profiles;
 using NzbDrone.Core.Profiles.Qualities;
 using NzbDrone.Core.Qualities;
 
@@ -32,8 +30,23 @@ namespace NzbDrone.Api.Profiles
                 Id = model.Id,
 
                 Name = model.Name,
-                Cutoff = model.Cutoff,
-                Items = model.Items.ConvertAll(ToResource)
+                Cutoff = (Quality)model.Cutoff,
+
+                // Flatten groups so things don't explode
+                Items = model.Items.SelectMany(i =>
+                {
+                    if (i == null)
+                    {
+                        return null;
+                    }
+
+                    if (i.Items.Any())
+                    {
+                        return i.Items.ConvertAll(ToResource);
+                    }
+
+                    return new List<ProfileQualityItemResource> {ToResource(i)};
+                }).ToList()
             };
         }
 
@@ -57,7 +70,7 @@ namespace NzbDrone.Api.Profiles
                 Id = resource.Id,
 
                 Name = resource.Name,
-                Cutoff = (Quality)resource.Cutoff.Id,
+                Cutoff = resource.Cutoff.Id,
                 Items = resource.Items.ConvertAll(ToModel)
             };
         }

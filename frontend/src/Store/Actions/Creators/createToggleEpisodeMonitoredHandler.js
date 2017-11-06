@@ -1,7 +1,8 @@
 import $ from 'jquery';
 import updateEpisodes from 'Utilities/Episode/updateEpisodes';
+import getSectionState from 'Utilities/State/getSectionState';
 
-function createToggleEpisodeMonitoredHandler(section, getFromState) {
+function createToggleEpisodeMonitoredHandler(section) {
   return function(payload) {
     return function(dispatch, getState) {
       const {
@@ -9,7 +10,7 @@ function createToggleEpisodeMonitoredHandler(section, getFromState) {
         monitored
       } = payload;
 
-      const state = getFromState(getState());
+      const state = getSectionState(getState(), section, true);
 
       updateEpisodes(dispatch, section, state.items, [episodeId], {
         isSaving: true

@@ -247,7 +247,7 @@ class SignalRConnector extends Component {
   }
 
   handleQueueStatus = (body) => {
-    this.props.update({ section: 'queueStatus', data: body.resource });
+    this.props.update({ section: 'queue.status', data: body.resource });
   }
 
   handleVersion = (body) => {

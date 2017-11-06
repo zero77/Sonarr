@@ -80,7 +80,7 @@ class ImportSeriesTable extends Component {
 
       // Props doesn't have a selected series or
       // the selected series is an existing series.
-      if ((selectedSeries && !prevItem.selectedSeries) || (isExistingSeries && !prevItem.selectedSeries)) {
+      if ((!selectedSeries && prevItem.selectedSeries) || (isExistingSeries && !prevItem.selectedSeries)) {
         onSelectedChange({ id, value: false });
 
         return;

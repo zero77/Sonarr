@@ -103,5 +103,5 @@ export default connectSection(
   mapDispatchToProps,
   undefined,
   undefined,
-  { section: 'interactiveImport.interactiveImportEpisodes' }
+  { section: 'interactiveImport.episodes' }
 )(SelectEpisodeModalContentConnector);

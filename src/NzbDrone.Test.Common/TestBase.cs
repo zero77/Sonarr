@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading;
 using FluentAssertions;
@@ -93,7 +93,9 @@ namespace NzbDrone.Test.Common
 
             LogManager.ReconfigExistingLoggers();
 
-            TempFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "_temp_" + DateTime.Now.Ticks);
+            var assemblyName = this.GetType().Assembly.GetName().Name.Replace(".", "_");
+
+            TempFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, $"_temp_{assemblyName}_{DateTime.Now.Ticks}");
 
             TestLogger.Trace("Creating Temp Folder: {0}", TempFolder);
             Directory.CreateDirectory(TempFolder);

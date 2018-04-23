@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using FluentAssertions;
 using NUnit.Framework;
@@ -100,7 +100,8 @@ namespace NzbDrone.Common.Test.CacheTests
                 Thread.Sleep(100);
             }
 
-            hitCount.Should().BeInRange(3, 6);
+            // hitCOunt should always be 4, but isn't very accurate because Thread.Sleep isn't going to be accurate
+            hitCount.Should().BeInRange(4, 7);
         }
     }
 

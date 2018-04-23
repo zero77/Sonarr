@@ -55,8 +55,6 @@ namespace NzbDrone.Core.Test.Messaging.Commands
         {
             var commandExecuted = false;
 
-            Thread.Sleep(10);
-
             Mocker.GetMock<IManageCommandQueue>()
                   .Setup(s => s.Complete(It.Is<CommandModel>(c => c == commandModel), It.IsAny<string>()))
                   .Callback(() => commandExecuted = true);
@@ -67,12 +65,14 @@ namespace NzbDrone.Core.Test.Messaging.Commands
 
             _commandQueue.Add(commandModel);
 
+            Thread.Sleep(100);
+
             while (!commandExecuted)
             {
                 Thread.Sleep(100);
             }
 
-            Thread.Sleep(10);
+            Thread.Sleep(100);
         }
 
         [Test]

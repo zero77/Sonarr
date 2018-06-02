@@ -72,7 +72,9 @@ AddJsonNet()
 BuildWithMSBuild()
 {
     installationPath=`$vswhere -latest -products \* -requires Microsoft.Component.MSBuild -property installationPath`
-    msBuild="$installationPath\MSBuild\\$msBuildVersion\Bin"
+    installationPath=${installationPath/C:\\/\/c\/}
+    installationPath=${installationPath//\\/\/}
+    msBuild="$installationPath/MSBuild/$msBuildVersion/Bin"
     echo $msBuild
 
     export PATH=$msBuild:$PATH

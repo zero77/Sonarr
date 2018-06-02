@@ -78,7 +78,7 @@ BuildWithMSBuild()
     echo $msBuild
 
     export PATH=$msBuild:$PATH
-    CheckExitCode MSBuild.exe $slnFile //t:Clean //m
+    CheckExitCode MSBuild.exe $slnFile //p:Configuration=Release //p:Platform=x86 //t:Clean //m
     $nuget restore $slnFile
     CheckExitCode MSBuild.exe $slnFile //p:Configuration=Release //p:Platform=x86 //t:Build //m //p:AllowedReferenceRelatedFileExtensions=.pdb
 }

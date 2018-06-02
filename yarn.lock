@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@aspnet/signalr@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@aspnet/signalr/-/signalr-1.0.0.tgz#26b10a32014a65c540cc5053cffa883c320788ce"
+
 "@babel/code-frame@7.0.0-beta.36":
   version "7.0.0-beta.36"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.36.tgz#2349d7ec04b3a06945ae173280ef8579b63728e4"
@@ -4084,10 +4088,6 @@ jquery@3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
-jquery@>=1.6.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
-
 js-base64@^2.1.9:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.3.2.tgz#a79a923666372b580f8e27f51845c6f7e8fbfbaf"
@@ -6673,12 +6673,6 @@ sigmund@~1.0.0:
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
-
-signalr@2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/signalr/-/signalr-2.2.2.tgz#ba07915eb5e08cfbc87765047ec6972694d008e2"
-  dependencies:
-    jquery ">=1.6.4"
 
 slash@^1.0.0:
   version "1.0.0"

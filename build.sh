@@ -1,5 +1,5 @@
 #! /bin/bash
-msBuild='/c/Program Files (x86)/MSBuild/14.0/Bin'
+msBuild='/c/Program Files (x86)/MSBuild/15.0/Bin'
 outputFolder='./_output'
 outputFolderLinux='./_output_linux'
 outputFolderMacOS='./_output_macos'

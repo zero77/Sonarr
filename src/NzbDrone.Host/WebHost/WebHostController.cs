@@ -120,7 +120,7 @@ namespace NzbDrone.Host.WebHost
         {
             _logger.Info("Attempting to stop OWIN host");
 
-            await _host.StopAsync(TimeSpan.FromSeconds(5));
+            await _host.StopAsync();
             _host.Dispose();
             _host = null;
 

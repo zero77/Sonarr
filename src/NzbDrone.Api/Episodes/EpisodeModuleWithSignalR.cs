@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NzbDrone.Api.EpisodeFiles;
 using NzbDrone.Api.Series;
 using NzbDrone.Common.Extensions;
@@ -8,8 +8,8 @@ using NzbDrone.Core.Download;
 using NzbDrone.Core.MediaFiles.Events;
 using NzbDrone.Core.Messaging.Events;
 using NzbDrone.Core.Tv;
-using NzbDrone.SignalR;
 using Sonarr.Http;
+using Sonarr.SignalR;
 
 namespace NzbDrone.Api.Episodes
 {

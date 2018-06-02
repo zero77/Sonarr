@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NzbDrone.Core.Datastore.Events;
 using NzbDrone.Core.MediaFiles;
 using NzbDrone.Core.MediaFiles.Events;
@@ -6,8 +6,8 @@ using NzbDrone.Core.Messaging.Events;
 using NzbDrone.Core.Tv;
 using NzbDrone.Core.DecisionEngine;
 using NzbDrone.Core.Exceptions;
-using NzbDrone.SignalR;
 using Sonarr.Http;
+using Sonarr.SignalR;
 using HttpStatusCode = System.Net.HttpStatusCode;
 
 namespace NzbDrone.Api.EpisodeFiles

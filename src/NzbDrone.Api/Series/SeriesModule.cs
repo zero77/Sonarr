@@ -14,9 +14,9 @@ using NzbDrone.Core.Tv.Events;
 using NzbDrone.Core.Validation.Paths;
 using NzbDrone.Core.DataAugmentation.Scene;
 using NzbDrone.Core.Validation;
-using NzbDrone.SignalR;
 using Sonarr.Http;
 using Sonarr.Http.Extensions;
+using Sonarr.SignalR;
 
 namespace NzbDrone.Api.Series
 {

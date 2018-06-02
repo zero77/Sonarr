@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Nancy;
 using NzbDrone.Core.DecisionEngine;
 using NzbDrone.Core.Tv;
-using NzbDrone.SignalR;
 using Sonarr.Http.Extensions;
 using Sonarr.Http.REST;
+using Sonarr.SignalR;
 
 namespace Sonarr.Api.V3.Episodes
 {

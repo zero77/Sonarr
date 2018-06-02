@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NzbDrone.Core.Datastore.Events;
 using NzbDrone.Core.Messaging.Events;
 using NzbDrone.Core.Tags;
-using NzbDrone.SignalR;
 using Sonarr.Http;
+using Sonarr.SignalR;
 
 namespace Sonarr.Api.V3.Tags
 {

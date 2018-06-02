@@ -31,7 +31,7 @@ namespace NzbDrone.Host.AccessControl
             if (!_configFileProvider.EnableSsl) return;
             if (IsRegistered()) return;
 
-            if (string.IsNullOrWhiteSpace(_configFileProvider.SslCertHash))
+            if (string.IsNullOrWhiteSpace(_configFileProvider.SslCertPath))
             {
                 _logger.Warn("Unable to enable SSL, SSL Cert Hash is required");
                 return;
@@ -39,7 +39,7 @@ namespace NzbDrone.Host.AccessControl
 
             var arguments = string.Format("http add sslcert ipport=0.0.0.0:{0} certhash={1} appid={{{2}}}",
                                             _configFileProvider.SslPort,
-                                            _configFileProvider.SslCertHash,
+                                            _configFileProvider.SslCertPath,
                                             APP_ID);
 
             //TODO: Validate that the cert was added properly, invisible spaces FTL
@@ -63,7 +63,7 @@ namespace NzbDrone.Host.AccessControl
 
                 if (match.Success)
                 {
-                    if (match.Groups["hash"].Value != _configFileProvider.SslCertHash)
+                    if (match.Groups["hash"].Value != _configFileProvider.SslCertPath)
                     {
                         Unregister();
 

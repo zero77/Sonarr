@@ -216,13 +216,13 @@
       <Project>{FF5EE3B6-913B-47CE-9CEB-11C51B4E1205}</Project>
       <Name>NzbDrone.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NzbDrone.SignalR\NzbDrone.SignalR.csproj">
-      <Project>{7C2CC69F-5CA0-4E5C-85CB-983F9F6C3B36}</Project>
-      <Name>NzbDrone.SignalR</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sonarr.Http\Sonarr.Http.csproj">
       <Project>{5370BFF7-1BD7-46BC-AF06-7D9EA5CDA1D6}</Project>
       <Name>Sonarr.Http</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sonarr.SignalR\Sonarr.SignalR.csproj">
+      <Project>{75176e7b-169a-4a31-a4a5-28566e5929f8}</Project>
+      <Name>Sonarr.SignalR</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -9,10 +9,10 @@ using NzbDrone.Core.MediaFiles;
 using NzbDrone.Core.MediaFiles.Events;
 using NzbDrone.Core.Messaging.Events;
 using NzbDrone.Core.Tv;
-using NzbDrone.SignalR;
 using Sonarr.Http;
 using Sonarr.Http.Extensions;
 using BadRequestException = Sonarr.Http.REST.BadRequestException;
+using Sonarr.SignalR;
 
 namespace Sonarr.Api.V3.EpisodeFiles
 {

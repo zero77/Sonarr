@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using FluentValidation;
 using NzbDrone.Core.RootFolders;
 using NzbDrone.Core.Validation.Paths;
-using NzbDrone.SignalR;
 using Sonarr.Http;
+using Sonarr.SignalR;
 
 namespace Sonarr.Api.V3.RootFolders
 {

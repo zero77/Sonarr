@@ -1,8 +1,8 @@
 using NzbDrone.Core.Datastore;
 using NzbDrone.Core.Datastore.Events;
 using NzbDrone.Core.Messaging.Events;
-using NzbDrone.SignalR;
 using Sonarr.Http.REST;
+using Sonarr.SignalR;
 
 namespace Sonarr.Http
 {

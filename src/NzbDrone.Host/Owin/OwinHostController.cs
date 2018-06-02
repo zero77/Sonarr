@@ -4,7 +4,8 @@ using NzbDrone.Host.AccessControl;
 
 namespace NzbDrone.Host.Owin
 {
-    public class OwinHostController : IHostController
+//    public class OwinHostController : IHostController
+    public class OwinHostController
     {
         private readonly IOwinAppFactory _owinAppFactory;
         private readonly IRemoteAccessAdapter _removeAccessAdapter;

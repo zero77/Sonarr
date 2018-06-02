@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NzbDrone.Core.Datastore.Events;
 using NzbDrone.Core.HealthCheck;
 using NzbDrone.Core.Messaging.Events;
-using NzbDrone.SignalR;
 using Sonarr.Http;
+using Sonarr.SignalR;
 
 namespace NzbDrone.Api.Health
 {

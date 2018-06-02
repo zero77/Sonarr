@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Sonarr.Http.REST;
 using NzbDrone.Core.Tv;
 using NzbDrone.Core.DecisionEngine;
-using NzbDrone.SignalR;
+using Sonarr.SignalR;
 
 namespace NzbDrone.Api.Episodes
 {

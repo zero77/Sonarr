@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sonarr.Http.Extensions;
@@ -8,10 +8,9 @@ using NzbDrone.Core.Datastore.Events;
 using NzbDrone.Core.Messaging.Commands;
 using NzbDrone.Core.Messaging.Events;
 using NzbDrone.Core.ProgressMessaging;
-using NzbDrone.SignalR;
 using Sonarr.Http;
-using Sonarr.Http.Mapping;
 using Sonarr.Http.Validation;
+using Sonarr.SignalR;
 
 
 namespace NzbDrone.Api.Commands

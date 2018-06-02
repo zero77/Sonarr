@@ -4,7 +4,7 @@ using Sonarr.Http;
 using NzbDrone.Common.Composition;
 using NzbDrone.Common.EnvironmentInfo;
 using NzbDrone.Common.Http.Dispatchers;
-using NzbDrone.SignalR;
+using Sonarr.SignalR;
 
 namespace NzbDrone.Host
 {
@@ -28,7 +28,7 @@ namespace NzbDrone.Host
         private MainAppContainerBuilder(StartupContext args, List<string> assemblies)
             : base(args, assemblies)
         {
-            AutoRegisterImplementations<NzbDronePersistentConnection>();
+            AutoRegisterImplementations<MessageHub>();
 
             Container.Register<INancyBootstrapper, SonarrBootstrapper>();
             Container.Register<IHttpDispatcher, FallbackHttpDispatcher>();

@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using NzbDrone.Core.Datastore.Events;
 using NzbDrone.Core.Jobs;
 using NzbDrone.Core.Messaging.Events;
-using NzbDrone.SignalR;
 using Sonarr.Http;
+using Sonarr.SignalR;
 
 namespace Sonarr.Api.V3.System.Tasks
 {

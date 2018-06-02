@@ -2,10 +2,10 @@ using System.Linq;
 using NzbDrone.Core.Datastore;
 using NzbDrone.Core.DecisionEngine;
 using NzbDrone.Core.Tv;
-using NzbDrone.SignalR;
 using Sonarr.Api.V3.Episodes;
 using Sonarr.Http;
 using Sonarr.Http.Extensions;
+using Sonarr.SignalR;
 
 namespace Sonarr.Api.V3.Wanted
 {

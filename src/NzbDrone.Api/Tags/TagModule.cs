@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NzbDrone.Core.Datastore.Events;
 using NzbDrone.Core.Messaging.Events;
 using NzbDrone.Core.Tags;
-using NzbDrone.SignalR;
 using Sonarr.Http;
-using Sonarr.Http.Mapping;
+using Sonarr.SignalR;
 
 namespace NzbDrone.Api.Tags
 {

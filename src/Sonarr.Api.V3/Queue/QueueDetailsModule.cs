@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NzbDrone.Core.Datastore.Events;
 using NzbDrone.Core.Download.Pending;
 using NzbDrone.Core.Messaging.Events;
 using NzbDrone.Core.Queue;
-using NzbDrone.SignalR;
 using Sonarr.Http;
 using Sonarr.Http.Extensions;
+using Sonarr.SignalR;
 
 namespace Sonarr.Api.V3.Queue
 {

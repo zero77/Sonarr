@@ -16,10 +16,10 @@ using NzbDrone.Core.Tv.Commands;
 using NzbDrone.Core.Tv.Events;
 using NzbDrone.Core.Validation;
 using NzbDrone.Core.Validation.Paths;
-using NzbDrone.SignalR;
 using Sonarr.Http;
 using Sonarr.Http.Extensions;
 using Sonarr.Http.Mapping;
+using Sonarr.SignalR;
 
 namespace Sonarr.Api.V3.Series
 {

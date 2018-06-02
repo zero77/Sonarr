@@ -105,6 +105,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
@@ -137,14 +138,14 @@
     <Compile Include="BrowserService.cs" />
     <Compile Include="IUserAlert.cs" />
     <Compile Include="MainAppContainerBuilder.cs" />
-    <Compile Include="Owin\IHostController.cs" />
+    <Compile Include="IHostController.cs" />
     <Compile Include="Owin\MiddleWare\IOwinMiddleWare.cs" />
     <Compile Include="Owin\MiddleWare\NancyMiddleWare.cs" />
     <Compile Include="Owin\MiddleWare\NzbDroneVersionMiddleWare.cs" />
     <Compile Include="Owin\MiddleWare\SignalRMiddleWare.cs" />
     <Compile Include="Owin\NlogTextWriter.cs" />
     <Compile Include="Owin\OwinHostController.cs" />
-    <Compile Include="Owin\OwinServiceProvider.cs" />
+    <Compile Include="Owin\IOwinAppFactory.cs" />
     <Compile Include="Owin\OwinTraceOutputFactory.cs" />
     <Compile Include="Owin\PortInUseException.cs" />
     <Compile Include="PlatformValidation.cs" />
@@ -153,9 +154,15 @@
     <Compile Include="SingleInstancePolicy.cs" />
     <Compile Include="SpinService.cs" />
     <Compile Include="TerminateApplicationException.cs" />
+    <Compile Include="WebHost\Middleware\IAspNetCoreMiddleware.cs" />
+    <Compile Include="WebHost\Middleware\NancyMiddleware.cs" />
+    <Compile Include="WebHost\Middleware\SignalRMiddleware.cs" />
+    <Compile Include="WebHost\WebHostController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -196,10 +203,6 @@
       <Project>{FF5EE3B6-913B-47CE-9CEB-11C51B4E1205}</Project>
       <Name>NzbDrone.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NzbDrone.SignalR\NzbDrone.SignalR.csproj">
-      <Project>{7C2CC69F-5CA0-4E5C-85CB-983F9F6C3B36}</Project>
-      <Name>NzbDrone.SignalR</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sonarr.Api.V3\Sonarr.Api.V3.csproj">
       <Project>{7140ff1f-79be-492f-9188-b21a050bf708}</Project>
       <Name>Sonarr.Api.V3</Name>
@@ -207,6 +210,10 @@
     <ProjectReference Include="..\Sonarr.Http\Sonarr.Http.csproj">
       <Project>{5370bff7-1bd7-46bc-af06-7d9ea5cda1d6}</Project>
       <Name>Sonarr.Http</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sonarr.SignalR\Sonarr.SignalR.csproj">
+      <Project>{75176e7b-169a-4a31-a4a5-28566e5929f8}</Project>
+      <Name>Sonarr.SignalR</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,5 @@
 #! /bin/bash
-msBuild='/c/Program Files (x86)/MSBuild/15.0/Bin'
+msBuildVersion='15.0'
 outputFolder='./_output'
 outputFolderLinux='./_output_linux'
 outputFolderMacOS='./_output_macos'
@@ -12,6 +12,8 @@ updateFolder=$outputFolder/Sonarr.Update
 updateFolderMono=$outputFolderLinux/Sonarr.Update
 
 nuget='tools/nuget/nuget.exe';
+vswhere='tools/vswhere/vswhere.exe';
+
 CheckExitCode()
 {
     "$@"
@@ -69,6 +71,10 @@ AddJsonNet()
 
 BuildWithMSBuild()
 {
+    installationPath=`$vswhere -latest -products \* -requires Microsoft.Component.MSBuild -property installationPath`
+    msBuild='$installationPath\MSBuild\$msBuildersion\Bin'
+    echo $msBuild
+
     export PATH=$msBuild:$PATH
     CheckExitCode MSBuild.exe $slnFile //t:Clean //m
     $nuget restore $slnFile

@@ -105,7 +105,7 @@ class SignalRConnector extends Component {
       attrs.isDisconnected = true;
     }
 
-    setAppValue(attrs);
+    this.props.setAppValue(attrs);
 
     this.retryTimeoutId = setTimeout(() => {
       this.startConnection();

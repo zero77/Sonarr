@@ -9,7 +9,7 @@ namespace NzbDrone.Api.Profiles
     public class ProfileResource : RestResource
     {
         public string Name { get; set; }
-        public int Cutoff { get; set; }
+        public Quality Cutoff { get; set; }
         public List<ProfileQualityItemResource> Items { get; set; }
     }
 
@@ -30,7 +30,7 @@ namespace NzbDrone.Api.Profiles
                 Id = model.Id,
 
                 Name = model.Name,
-                Cutoff = model.Cutoff,
+                Cutoff = (Quality)model.Cutoff,
 
                 // Flatten groups so things don't explode
                 Items = model.Items.SelectMany(i =>
@@ -70,7 +70,7 @@ namespace NzbDrone.Api.Profiles
                 Id = resource.Id,
 
                 Name = resource.Name,
-                Cutoff = resource.Cutoff,
+                Cutoff = resource.Cutoff.Id,
                 Items = resource.Items.ConvertAll(ToModel)
             };
         }

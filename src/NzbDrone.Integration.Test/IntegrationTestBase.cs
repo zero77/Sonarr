@@ -288,9 +288,9 @@ namespace NzbDrone.Integration.Test
         {
             var profile = Profiles.Get(profileId);
 
-            if (profile.Cutoff != cutoff.Id)
+            if (profile.Cutoff != cutoff)
             {
-                profile.Cutoff = cutoff.Id;
+                profile.Cutoff = cutoff;
                 profile = Profiles.Put(profile);
             }
 

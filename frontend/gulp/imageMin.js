@@ -1,9 +1,9 @@
-var gulp = require('gulp');
-var print = require('gulp-print');
-var paths = require('./helpers/paths.js');
+const gulp = require('gulp');
+const print = require('gulp-print').default;
+const paths = require('./helpers/paths.js');
 
 gulp.task('imageMin', () => {
-  var imagemin = require('gulp-imagemin');
+  const imagemin = require('gulp-imagemin');
   return gulp.src(paths.src.images)
     .pipe(imagemin({
       progressive: false,
@@ -11,5 +11,5 @@ gulp.task('imageMin', () => {
       svgoPlugins: [{ removeViewBox: false }]
     }))
     .pipe(print())
-    .pipe(gulp.dest(paths.src.content + 'Images/'));
+    .pipe(gulp.dest(`${paths.src.content}Images/`));
 });

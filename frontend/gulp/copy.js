@@ -1,9 +1,9 @@
-var path = require('path');
-var gulp = require('gulp');
-var print = require('gulp-print');
-var cache = require('gulp-cached');
-var livereload = require('gulp-livereload');
-var paths = require('./helpers/paths.js');
+const path = require('path');
+const gulp = require('gulp');
+const print = require('gulp-print').default;
+const cache = require('gulp-cached');
+const livereload = require('gulp-livereload');
+const paths = require('./helpers/paths.js');
 
 gulp.task('copyJs', () => {
   return gulp.src(

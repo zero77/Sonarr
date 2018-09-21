@@ -76,7 +76,7 @@ class EpisodeFileEditorModalContent extends Component {
   getSelectedIds = () => {
     const selectedIds = getSelectedIds(this.state.selectedState);
 
-    selectedIds.reduce((acc, id) => {
+    return selectedIds.reduce((acc, id) => {
       const matchingItem = this.props.items.find((item) => item.id === id);
 
       if (matchingItem && !acc.includes(matchingItem.episodeFileID)) {

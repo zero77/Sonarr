@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import Raven from 'raven-js';
+import * as sentry from '@sentry/browser';
 
 class ErrorBoundary extends Component {
 
@@ -22,7 +22,7 @@ class ErrorBoundary extends Component {
       info
     });
 
-    Raven.captureException(error);
+    sentry.captureException(error);
   }
 
   //

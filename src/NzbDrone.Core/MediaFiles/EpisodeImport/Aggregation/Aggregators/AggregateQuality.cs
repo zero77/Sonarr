@@ -53,6 +53,8 @@ namespace NzbDrone.Core.MediaFiles.EpisodeImport.Aggregation.Aggregators
                 }
             }
 
+            _logger.Trace("Finding quality. Source: {0}. Resolution: {1}", source, resolution);
+
             var quality = new QualityModel(Quality.FindBySourceAndResolution(source, resolution), revison);
 
             if (resolutionConfidence == Confidence.MediaInfo)

@@ -6,6 +6,7 @@ module.exports = {
   dimColor: '#555',
   black: '#000',
   white: '#fff',
+  offWhite: '#f5f7fa',
   primaryColor: '#5d9cec',
   selectedColor: '#f9be03',
   successColor: '#27c24c',

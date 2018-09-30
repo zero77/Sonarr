@@ -22,6 +22,7 @@ class SeriesIndexPoster extends Component {
     super(props, context);
 
     this.state = {
+      hasPosterError: false,
       isEditSeriesModalOpen: false,
       isDeleteSeriesModalOpen: false
     };
@@ -47,6 +48,18 @@ class SeriesIndexPoster extends Component {
 
   onDeleteSeriesModalClose = () => {
     this.setState({ isDeleteSeriesModalOpen: false });
+  }
+
+  onPosterLoad = () => {
+    if (this.state.hasPosterError) {
+      this.setState({ hasPosterError: false });
+    }
+  }
+
+  onPosterLoadError = () => {
+    if (!this.state.hasPosterError) {
+      this.setState({ hasPosterError: true });
+    }
   }
 
   //
@@ -86,6 +99,7 @@ class SeriesIndexPoster extends Component {
     } = statistics;
 
     const {
+      hasPosterError,
       isEditSeriesModalOpen,
       isDeleteSeriesModalOpen
     } = this.state;
@@ -138,7 +152,16 @@ class SeriesIndexPoster extends Component {
                 size={250}
                 lazy={false}
                 overflow={true}
+                onError={this.onPosterLoadError}
+                onLoad={this.onPosterLoad}
               />
+
+              {
+                hasPosterError &&
+                  <div className={styles.overlayTitle}>
+                    {title}
+                  </div>
+              }
             </Link>
           </div>
 

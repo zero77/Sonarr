@@ -45,10 +45,17 @@ class SeriesPoster extends Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidMount() {
+    if (!this.state.posterUrl && this.props.onError) {
+      this.props.onError();
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     const {
       images,
-      size
+      size,
+      onError
     } = this.props;
 
     const {
@@ -73,6 +80,10 @@ class SeriesPoster extends Component {
         posterUrl: posterPlaceholder,
         hasError: false
       });
+
+      if (onError) {
+        onError();
+      }
     }
   }
 
@@ -80,7 +91,13 @@ class SeriesPoster extends Component {
   // Listeners
 
   onError = () => {
-    this.setState({ hasError: true });
+    this.setState({
+      hasError: true
+    });
+
+    if (this.props.onError) {
+      this.props.onError();
+    }
   }
 
   onLoad = () => {
@@ -88,6 +105,10 @@ class SeriesPoster extends Component {
       isLoaded: true,
       hasError: false
     });
+
+    if (this.props.onLoad) {
+      this.props.onLoad();
+    }
   }
 
   //
@@ -160,7 +181,9 @@ SeriesPoster.propTypes = {
   images: PropTypes.arrayOf(PropTypes.object).isRequired,
   size: PropTypes.number.isRequired,
   lazy: PropTypes.bool.isRequired,
-  overflow: PropTypes.bool.isRequired
+  overflow: PropTypes.bool.isRequired,
+  onError: PropTypes.func,
+  onLoad: PropTypes.func
 };
 
 SeriesPoster.defaultProps = {

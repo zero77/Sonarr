@@ -7,7 +7,7 @@ import createSetClientSideCollectionSortReducer from './Creators/Reducers/create
 import createSetClientSideCollectionFilterReducer from './Creators/Reducers/createSetClientSideCollectionFilterReducer';
 import createHandleActions from './Creators/createHandleActions';
 import { set, updateItem } from './baseActions';
-import { filters, filterPredicates } from './seriesActions';
+import { filters, filterPredicates, sortPredicates } from './seriesActions';
 
 //
 // Variables
@@ -76,7 +76,9 @@ export const defaultState = {
       type: filterBuilderTypes.ARRAY,
       valueType: filterBuilderValueTypes.TAG
     }
-  ]
+  ],
+
+  sortPredicates
 };
 
 export const persistState = [

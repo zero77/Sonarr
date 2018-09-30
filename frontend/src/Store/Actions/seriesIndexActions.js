@@ -6,7 +6,7 @@ import createSetTableOptionReducer from './Creators/Reducers/createSetTableOptio
 import createSetClientSideCollectionSortReducer from './Creators/Reducers/createSetClientSideCollectionSortReducer';
 import createSetClientSideCollectionFilterReducer from './Creators/Reducers/createSetClientSideCollectionFilterReducer';
 import createHandleActions from './Creators/createHandleActions';
-import { filters, filterPredicates } from './seriesActions';
+import { filters, filterPredicates, sortPredicates } from './seriesActions';
 //
 // Variables
 
@@ -47,6 +47,7 @@ export const defaultState = {
     {
       name: 'status',
       columnLabel: 'Status',
+      isSortable: true,
       isVisible: true,
       isModifiable: false
     },
@@ -168,6 +169,8 @@ export const defaultState = {
   ],
 
   sortPredicates: {
+    ...sortPredicates,
+
     network: function(item) {
       const network = item.network;
 

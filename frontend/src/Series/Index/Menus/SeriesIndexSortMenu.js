@@ -20,6 +20,15 @@ function SeriesIndexSortMenu(props) {
     >
       <MenuContent>
         <SortMenuItem
+          name="status"
+          sortKey={sortKey}
+          sortDirection={sortDirection}
+          onPress={onSortSelect}
+        >
+          Monitored/Status
+        </SortMenuItem>
+
+        <SortMenuItem
           name="sortTitle"
           sortKey={sortKey}
           sortDirection={sortDirection}

@@ -22,6 +22,7 @@ function getColumns(showLanguageProfile) {
   return [
     {
       name: 'status',
+      isSortable: true,
       isVisible: true
     },
     {

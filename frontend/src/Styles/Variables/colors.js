@@ -18,7 +18,9 @@ module.exports = {
   nzbdronePink: '#f43565',
   sonarrBlue,
   helpTextColor: '#909293',
+  darkGray: '#888',
   gray: '#adadad',
+  lightGray: '#ddd',
   disabledInputColor: '#808080',
 
   // Theme Colors

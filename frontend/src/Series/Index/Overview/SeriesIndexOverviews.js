@@ -167,6 +167,7 @@ class SeriesIndexOverviews extends Component {
       overviewOptions,
       showRelativeDates,
       shortDateFormat,
+      longDateFormat,
       timeFormat,
       isSmallScreen
     } = this.props;
@@ -194,6 +195,7 @@ class SeriesIndexOverviews extends Component {
         overviewOptions={overviewOptions}
         showRelativeDates={showRelativeDates}
         shortDateFormat={shortDateFormat}
+        longDateFormat={longDateFormat}
         timeFormat={timeFormat}
         isSmallScreen={isSmallScreen}
         style={style}
@@ -277,6 +279,7 @@ SeriesIndexOverviews.propTypes = {
   contentBody: PropTypes.object.isRequired,
   showRelativeDates: PropTypes.bool.isRequired,
   shortDateFormat: PropTypes.string.isRequired,
+  longDateFormat: PropTypes.string.isRequired,
   isSmallScreen: PropTypes.bool.isRequired,
   timeFormat: PropTypes.string.isRequired,
   onRender: PropTypes.func.isRequired,

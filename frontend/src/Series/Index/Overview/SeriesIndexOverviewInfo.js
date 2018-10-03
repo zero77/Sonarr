@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import formatDateTime from 'Utilities/Date/formatDateTime';
 import getRelativeDate from 'Utilities/Date/getRelativeDate';
 import formatBytes from 'Utilities/Number/formatBytes';
 import { icons } from 'Helpers/Props';
@@ -90,7 +91,7 @@ function getInfoRowProps(row, props) {
 
   if (name === 'qualityProfileId') {
     return {
-      title: 'Quality PROFILE',
+      title: 'Quality Profile',
       iconName: icons.PROFILE,
       label: props.qualityProfile.name
     };
@@ -99,13 +100,14 @@ function getInfoRowProps(row, props) {
   if (name === 'previousAiring') {
     const {
       previousAiring,
-      shortDateFormat,
       showRelativeDates,
+      shortDateFormat,
+      longDateFormat,
       timeFormat
     } = props;
 
     return {
-      title: 'Previous Airing',
+      title: `Previous Airing: ${formatDateTime(previousAiring, longDateFormat, timeFormat)}`,
       iconName: icons.CALENDAR,
       label: getRelativeDate(
         previousAiring,
@@ -122,13 +124,14 @@ function getInfoRowProps(row, props) {
   if (name === 'added') {
     const {
       added,
-      shortDateFormat,
       showRelativeDates,
+      shortDateFormat,
+      longDateFormat,
       timeFormat
     } = props;
 
     return {
-      title: 'Added',
+      title: `Added: ${formatDateTime(added, longDateFormat, timeFormat)}`,
       iconName: icons.ADD,
       label: getRelativeDate(
         added,
@@ -182,6 +185,7 @@ function SeriesIndexOverviewInfo(props) {
     nextAiring,
     showRelativeDates,
     shortDateFormat,
+    longDateFormat,
     timeFormat
   } = props;
 
@@ -192,19 +196,19 @@ function SeriesIndexOverviewInfo(props) {
     <div className={styles.infos}>
       {
         !!nextAiring &&
-        <SeriesIndexOverviewInfoRow
-          title={nextAiring}
-          iconName={icons.SCHEDULED}
-          label={getRelativeDate(
-            nextAiring,
-            shortDateFormat,
-            showRelativeDates,
-            {
-              timeFormat,
-              timeForToday: true
-            }
-          )}
-        />
+          <SeriesIndexOverviewInfoRow
+            title={formatDateTime(nextAiring, longDateFormat, timeFormat)}
+            iconName={icons.SCHEDULED}
+            label={getRelativeDate(
+              nextAiring,
+              shortDateFormat,
+              showRelativeDates,
+              {
+                timeFormat,
+                timeForToday: true
+              }
+            )}
+          />
       }
 
       {
@@ -255,6 +259,7 @@ SeriesIndexOverviewInfo.propTypes = {
   sortKey: PropTypes.string.isRequired,
   showRelativeDates: PropTypes.bool.isRequired,
   shortDateFormat: PropTypes.string.isRequired,
+  longDateFormat: PropTypes.string.isRequired,
   timeFormat: PropTypes.string.isRequired
 };
 

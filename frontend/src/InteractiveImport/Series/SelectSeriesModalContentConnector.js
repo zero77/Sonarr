@@ -12,7 +12,17 @@ function createMapStateToProps() {
     createAllSeriesSelector(),
     (items) => {
       return {
-        items
+        items: items.sort((a, b) => {
+          if (a.sortTitle < b.sortTitle) {
+            return -1;
+          }
+
+          if (a.sortTitle > b.sortTitle) {
+            return 1;
+          }
+
+          return 0;
+        })
       };
     }
   );

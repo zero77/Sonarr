@@ -43,6 +43,7 @@ class SettingsToolbar extends Component {
       isSaving,
       hasPendingChanges,
       hasPendingLocation,
+      additionalButtons,
       onSavePress,
       onConfirmNavigation,
       onCancelNavigation,
@@ -67,7 +68,12 @@ class SettingsToolbar extends Component {
                 onPress={onSavePress}
               />
           }
+
+          {
+            additionalButtons
+          }
         </PageToolbarSection>
+
         <PendingChangesModal
           isOpen={hasPendingLocation}
           onConfirm={onConfirmNavigation}
@@ -84,6 +90,7 @@ SettingsToolbar.propTypes = {
   isSaving: PropTypes.bool,
   hasPendingLocation: PropTypes.bool.isRequired,
   hasPendingChanges: PropTypes.bool,
+  additionalButtons: PropTypes.node,
   onSavePress: PropTypes.func,
   onAdvancedSettingsPress: PropTypes.func.isRequired,
   onConfirmNavigation: PropTypes.func.isRequired,

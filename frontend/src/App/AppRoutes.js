@@ -20,8 +20,8 @@ import Settings from 'Settings/Settings';
 import MediaManagementConnector from 'Settings/MediaManagement/MediaManagementConnector';
 import Profiles from 'Settings/Profiles/Profiles';
 import Quality from 'Settings/Quality/Quality';
-import IndexerSettings from 'Settings/Indexers/IndexerSettings';
-import DownloadClientSettings from 'Settings/DownloadClients/DownloadClientSettings';
+import IndexerSettingsConnector from 'Settings/Indexers/IndexerSettingsConnector';
+import DownloadClientSettingsConnector from 'Settings/DownloadClients/DownloadClientSettingsConnector';
 import NotificationSettings from 'Settings/Notifications/NotificationSettings';
 import MetadataSettings from 'Settings/Metadata/MetadataSettings';
 import TagSettings from 'Settings/Tags/TagSettings';
@@ -162,12 +162,12 @@ function AppRoutes(props) {
 
       <Route
         path="/settings/indexers"
-        component={IndexerSettings}
+        component={IndexerSettingsConnector}
       />
 
       <Route
         path="/settings/downloadclients"
-        component={DownloadClientSettings}
+        component={DownloadClientSettingsConnector}
       />
 
       <Route

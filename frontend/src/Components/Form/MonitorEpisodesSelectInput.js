@@ -7,8 +7,8 @@ const monitorOptions = [
   { key: 'future', value: 'Future Episodes' },
   { key: 'missing', value: 'Missing Episodes' },
   { key: 'existing', value: 'Existing Episodes' },
-  { key: 'first', value: 'Only First Season' },
-  { key: 'latest', value: 'Only Latest Season' },
+  { key: 'firstSeason', value: 'Only First Season' },
+  { key: 'latestSeason', value: 'Only Latest Season' },
   { key: 'none', value: 'None' }
 ];
 

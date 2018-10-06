@@ -1,7 +1,5 @@
-import _ from 'lodash';
 import $ from 'jquery';
 import { createAction } from 'redux-actions';
-import getMonitoringOptions from 'Utilities/Series/getMonitoringOptions';
 import { filterBuilderTypes, filterBuilderValueTypes, sortDirections } from 'Helpers/Props';
 import { createThunk, handleThunks } from 'Store/thunks';
 import createSetClientSideCollectionSortReducer from './Creators/Reducers/createSetClientSideCollectionSortReducer';
@@ -106,29 +104,13 @@ export const actionHandlers = handleThunks({
       monitor
     } = payload;
 
-    let monitoringOptions = null;
     const series = [];
-    const allSeries = getState().series.items;
 
     seriesIds.forEach((id) => {
-      const s = _.find(allSeries, { id });
       const seriesToUpdate = { id };
 
       if (payload.hasOwnProperty('monitored')) {
         seriesToUpdate.monitored = monitored;
-      }
-
-      if (monitor) {
-        const {
-          seasons,
-          options: seriesMonitoringOptions
-        } = getMonitoringOptions(_.cloneDeep(s.seasons), monitor);
-
-        if (!monitoringOptions) {
-          monitoringOptions = seriesMonitoringOptions;
-        }
-
-        seriesToUpdate.seasons = seasons;
       }
 
       series.push(seriesToUpdate);
@@ -144,7 +126,7 @@ export const actionHandlers = handleThunks({
       method: 'POST',
       data: JSON.stringify({
         series,
-        monitoringOptions
+        monitoringOptions: { monitor }
       }),
       dataType: 'json'
     });

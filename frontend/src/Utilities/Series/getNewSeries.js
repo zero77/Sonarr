@@ -1,4 +1,3 @@
-import getMonitoringOptions from 'Utilities/Series/getMonitoringOptions';
 
 function getNewSeries(series, payload) {
   const {
@@ -12,14 +11,12 @@ function getNewSeries(series, payload) {
     searchForMissingEpisodes = false
   } = payload;
 
-  const {
-    seasons,
-    options: addOptions
-  } = getMonitoringOptions(series.seasons, monitor);
+  const addOptions = {
+    monitor,
+    searchForMissingEpisodes
+  };
 
-  addOptions.searchForMissingEpisodes = searchForMissingEpisodes;
   series.addOptions = addOptions;
-  series.seasons = seasons;
   series.monitored = true;
   series.qualityProfileId = qualityProfileId;
   series.languageProfileId = languageProfileId;

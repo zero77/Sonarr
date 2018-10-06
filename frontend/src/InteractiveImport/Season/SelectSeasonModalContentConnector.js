@@ -17,7 +17,7 @@ function createMapStateToProps() {
       }
 
       return {
-        items: series.seasons
+        items: series.seasons.slice(0).reverse()
       };
     }
   );

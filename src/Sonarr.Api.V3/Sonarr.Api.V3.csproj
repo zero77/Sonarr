@@ -105,6 +105,7 @@
     <Compile Include="Profiles\Language\LanguageValidator.cs" />
     <Compile Include="Profiles\Quality\QualityItemsValidator.cs" />
     <Compile Include="Profiles\Quality\QualityCutoffValidator.cs" />
+    <Compile Include="ProviderTestAllResult.cs" />
     <Compile Include="Queue\QueueActionModule.cs" />
     <Compile Include="Queue\QueueBulkResource.cs" />
     <Compile Include="Queue\QueueDetailsModule.cs" />

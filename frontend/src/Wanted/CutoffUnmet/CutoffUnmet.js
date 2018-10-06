@@ -21,6 +21,15 @@ import FilterMenu from 'Components/Menu/FilterMenu';
 import ConfirmModal from 'Components/Modal/ConfirmModal';
 import CutoffUnmetRowConnector from './CutoffUnmetRowConnector';
 
+function getMonitoredValue(props) {
+  const {
+    filters,
+    selectedFilterKey
+  } = props;
+
+  return getFilterValue(filters, selectedFilterKey, 'monitored', false);
+}
+
 class CutoffUnmet extends Component {
 
   //
@@ -78,9 +87,12 @@ class CutoffUnmet extends Component {
   }
 
   onToggleSelectedPress = () => {
-    const selected = this.getSelectedIds();
+    const episodeIds = this.getSelectedIds();
 
-    this.props.onToggleSelectedPress(selected);
+    this.props.batchToggleCutoffUnmetEpisodes({
+      episodeIds,
+      monitored: !getMonitoredValue(this.props)
+    });
   }
 
   onSearchAllCutoffUnmetPress = () => {
@@ -123,7 +135,7 @@ class CutoffUnmet extends Component {
     } = this.state;
 
     const itemsSelected = !!this.getSelectedIds().length;
-    const monitoredFilterValue = getFilterValue(filters, 'monitored');
+    const isShowingMonitored = getMonitoredValue(this.props);
 
     return (
       <PageContent title="Cutoff Unmet">
@@ -137,7 +149,7 @@ class CutoffUnmet extends Component {
             />
 
             <PageToolbarButton
-              label={monitoredFilterValue ? 'Unmonitor Selected' : 'Monitor Selected'}
+              label={isShowingMonitored ? 'Unmonitor Selected' : 'Monitor Selected'}
               iconName={icons.MONITORED}
               isDisabled={!itemsSelected}
               isSpinning={isSaving}
@@ -261,7 +273,7 @@ CutoffUnmet.propTypes = {
   isSaving: PropTypes.bool.isRequired,
   onFilterSelect: PropTypes.func.isRequired,
   onSearchSelectedPress: PropTypes.func.isRequired,
-  onToggleSelectedPress: PropTypes.func.isRequired,
+  batchToggleCutoffUnmetEpisodes: PropTypes.func.isRequired,
   onSearchAllCutoffUnmetPress: PropTypes.func.isRequired
 };
 

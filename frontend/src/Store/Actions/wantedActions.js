@@ -195,7 +195,7 @@ export const SET_MISSING_FILTER = 'wanted/missing/setMissingFilter';
 export const SET_MISSING_TABLE_OPTION = 'wanted/missing/setMissingTableOption';
 export const CLEAR_MISSING = 'wanted/missing/clearMissing';
 
-export const BATCH_TOGGLE_MISSING_EPISODES = 'wanted/missing/';
+export const BATCH_TOGGLE_MISSING_EPISODES = 'wanted/missing/batchToggleMissingEpisodes';
 
 export const FETCH_CUTOFF_UNMET = 'wanted/cutoffUnmet/fetchCutoffUnmet';
 export const GOTO_FIRST_CUTOFF_UNMET_PAGE = 'wanted/cutoffUnmet/gotoCutoffUnmetFirstPage';

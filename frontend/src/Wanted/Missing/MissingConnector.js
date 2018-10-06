@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { registerPagePopulator, unregisterPagePopulator } from 'Utilities/pagePopulator';
-import getFilterValue from 'Utilities/Filter/getFilterValue';
 import hasDifferentItems from 'Utilities/Object/hasDifferentItems';
 import selectUniqueIds from 'Utilities/Object/selectUniqueIds';
 import createCommandExecutingSelector from 'Store/Selectors/createCommandExecutingSelector';
@@ -41,7 +40,7 @@ class MissingConnector extends Component {
   // Lifecycle
 
   componentDidMount() {
-    registerPagePopulator(this.repopulate);
+    registerPagePopulator(this.repopulate, ['episodeFileUpdated']);
     this.props.gotoMissingFirstPage();
   }
 
@@ -111,19 +110,6 @@ class MissingConnector extends Component {
     });
   }
 
-  onToggleSelectedPress = (selected) => {
-    const {
-      filters
-    } = this.props;
-
-    const monitored = getFilterValue(filters, 'monitored');
-
-    this.props.batchToggleMissingEpisodes({
-      episodeIds: selected,
-      monitored: monitored == null || !monitored
-    });
-  }
-
   onSearchAllMissingPress = () => {
     this.props.executeCommand({
       name: commandNames.MISSING_EPISODE_SEARCH
@@ -155,7 +141,6 @@ class MissingConnector extends Component {
 
 MissingConnector.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  filters: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetchMissing: PropTypes.func.isRequired,
   gotoMissingFirstPage: PropTypes.func.isRequired,
   gotoMissingPreviousPage: PropTypes.func.isRequired,
@@ -166,7 +151,6 @@ MissingConnector.propTypes = {
   setMissingFilter: PropTypes.func.isRequired,
   setMissingTableOption: PropTypes.func.isRequired,
   clearMissing: PropTypes.func.isRequired,
-  batchToggleMissingEpisodes: PropTypes.func.isRequired,
   executeCommand: PropTypes.func.isRequired,
   fetchQueueDetails: PropTypes.func.isRequired,
   clearQueueDetails: PropTypes.func.isRequired

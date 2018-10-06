@@ -415,6 +415,7 @@
     <Compile Include="ThingiProviderTests\ProviderStatusServiceFixture.cs" />
     <Compile Include="ThingiProviderTests\ProviderBaseFixture.cs" />
     <Compile Include="ThingiProviderTests\NullConfigFixture.cs" />
+    <Compile Include="TvTests\EpisodeMonitoredServiceTests\LegacySetEpisodeMontitoredFixture.cs" />
     <Compile Include="TvTests\EpisodeServiceTests\FindEpisodeByTitleFixture.cs" />
     <Compile Include="TvTests\EpisodeServiceTests\HandleEpisodeFileDeletedFixture.cs" />
     <Compile Include="TvTests\EpisodeRepositoryTests\ByAirDateFixture.cs" />

@@ -115,7 +115,8 @@ namespace Sonarr.Api.V3.Queue
                 case "quality":
                     return q => q.Quality;
                 case "progress":
-                    return q => 100 - q.Sizeleft / q.Size * 100;
+                    // Avoid exploding if a download's size is 0
+                    return q => 100 - q.Sizeleft / Math.Max(q.Size * 100, 1);
                 default:
                     return q => q.Timeleft;
             }

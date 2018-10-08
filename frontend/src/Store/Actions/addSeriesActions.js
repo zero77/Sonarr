@@ -2,11 +2,12 @@ import _ from 'lodash';
 import $ from 'jquery';
 import { createAction } from 'redux-actions';
 import { batchActions } from 'redux-batched-actions';
-import { createThunk, handleThunks } from 'Store/thunks';
+import monitorOptions from 'Utilities/Series/monitorOptions';
 import getSectionState from 'Utilities/State/getSectionState';
 import updateSectionState from 'Utilities/State/updateSectionState';
 import createAjaxRequest from 'Utilities/createAjaxRequest';
 import getNewSeries from 'Utilities/Series/getNewSeries';
+import { createThunk, handleThunks } from 'Store/thunks';
 import createSetSettingValueReducer from './Creators/Reducers/createSetSettingValueReducer';
 import createHandleActions from './Creators/createHandleActions';
 import { set, update, updateItem } from './baseActions';
@@ -31,7 +32,7 @@ export const defaultState = {
 
   defaults: {
     rootFolderPath: '',
-    monitor: 'allEpisodes',
+    monitor: monitorOptions[0].key,
     qualityProfileId: 0,
     languageProfileId: 0,
     seriesType: 'standard',

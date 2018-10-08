@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import formatBytes from 'Utilities/Number/formatBytes';
-import { icons, kinds, sizes } from 'Helpers/Props';
+import { icons, kinds, sizes, tooltipPositions } from 'Helpers/Props';
+import Icon from 'Components/Icon';
+import Label from 'Components/Label';
 import IconButton from 'Components/Link/IconButton';
 import ConfirmModal from 'Components/Modal/ConfirmModal';
-import Label from 'Components/Label';
+import Popover from 'Components/Tooltip/Popover';
 import QualityProfileNameConnector from 'Settings/Profiles/Quality/QualityProfileNameConnector';
 import EpisodeQuality from 'Episode/EpisodeQuality';
 import EpisodeAiringConnector from './EpisodeAiringConnector';
+import MediaInfo from './MediaInfo';
 import styles from './EpisodeSummary.css';
 
 class EpisodeSummary extends Component {
@@ -48,6 +51,7 @@ class EpisodeSummary extends Component {
       network,
       overview,
       airDateUtc,
+      mediaInfo,
       path,
       size,
       quality,
@@ -127,6 +131,17 @@ class EpisodeSummary extends Component {
                 </div>
 
                 <div className={styles.actions}>
+                  <Popover
+                    anchor={
+                      <Icon
+                        name={icons.MEDIA_INFO}
+                      />
+                    }
+                    title="Media Info"
+                    body={<MediaInfo {...mediaInfo} />}
+                    position={tooltipPositions.LEFT}
+                  />
+
                   <IconButton
                     name={icons.REMOVE}
                     onPress={this.onRemoveEpisodeFilePress}
@@ -156,6 +171,7 @@ EpisodeSummary.propTypes = {
   network: PropTypes.string.isRequired,
   overview: PropTypes.string,
   airDateUtc: PropTypes.string.isRequired,
+  mediaInfo: PropTypes.object,
   path: PropTypes.string,
   size: PropTypes.number,
   quality: PropTypes.object,

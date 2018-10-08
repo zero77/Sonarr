@@ -52,6 +52,7 @@ import {
   faEye as fasEye,
   faFastBackward as fasFastBackward,
   faFastForward as fasFastForward,
+  faFileInvoice as farFileInvoice,
   faFilter as fasFilter,
   faFolderOpen as fasFolderOpen,
   faForward as fasForward,
@@ -146,6 +147,7 @@ export const INFO = fasInfoCircle;
 export const INTERACTIVE = fasUser;
 export const KEYBOARD = farKeyboard;
 export const LOGOUT = fasSignoutAlt;
+export const MEDIA_INFO = farFileInvoice;
 export const MISSING = fasExclamationTriangle;
 export const MONITORED = fasBookmark;
 export const NETWORK = fasSignal;

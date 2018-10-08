@@ -11,7 +11,7 @@ function createMapStateToProps() {
     createSeriesSelector(),
     createEpisodeSelector(),
     createEpisodeFileSelector(),
-    (series, episode, episodeFile) => {
+    (series, episode, episodeFile = {}) => {
       const {
         qualityProfileId,
         network
@@ -23,17 +23,19 @@ function createMapStateToProps() {
       } = episode;
 
       const {
+        mediaInfo,
         path,
         size,
         quality,
         qualityCutoffNotMet
-      } = episodeFile || {};
+      } = episodeFile;
 
       return {
         network,
         qualityProfileId,
         airDateUtc,
         overview,
+        mediaInfo,
         path,
         size,
         quality,

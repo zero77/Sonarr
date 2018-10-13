@@ -5,6 +5,7 @@ using System.Linq;
 using NLog;
 using NzbDrone.Common.Extensions;
 using NzbDrone.Common.Instrumentation.Extensions;
+using NzbDrone.Core.Configuration;
 using NzbDrone.Core.DataAugmentation.DailySeries;
 using NzbDrone.Core.Exceptions;
 using NzbDrone.Core.MediaFiles;
@@ -25,6 +26,7 @@ namespace NzbDrone.Core.Tv
         private readonly IDailySeriesService _dailySeriesService;
         private readonly IDiskScanService _diskScanService;
         private readonly ICheckIfSeriesShouldBeRefreshed _checkIfSeriesShouldBeRefreshed;
+        private readonly IConfigService _configService;
         private readonly Logger _logger;
 
         public RefreshSeriesService(IProvideSeriesInfo seriesInfo,
@@ -34,6 +36,7 @@ namespace NzbDrone.Core.Tv
                                     IDailySeriesService dailySeriesService,
                                     IDiskScanService diskScanService,
                                     ICheckIfSeriesShouldBeRefreshed checkIfSeriesShouldBeRefreshed,
+                                    IConfigService configService,
                                     Logger logger)
         {
             _seriesInfo = seriesInfo;
@@ -43,6 +46,7 @@ namespace NzbDrone.Core.Tv
             _dailySeriesService = dailySeriesService;
             _diskScanService = diskScanService;
             _checkIfSeriesShouldBeRefreshed = checkIfSeriesShouldBeRefreshed;
+            _configService = configService;
             _logger = logger;
         }
 
@@ -144,8 +148,22 @@ namespace NzbDrone.Core.Tv
             return seasons;
         }
 
-        private void RescanSeries(Series series)
+        private void RescanSeries(Series series, CommandTrigger trigger)
         {
+            var shouldResscan = _configService.RescanAfterRefresh;
+
+            if (shouldResscan == RescanAfterRefreshType.Never)
+            {
+                _logger.Trace("Skipping refresh of {0}. Reason: never recan after refresh", series);
+                return;
+            }
+
+            if (shouldResscan == RescanAfterRefreshType.AfterManual && trigger != CommandTrigger.Manual)
+            {
+                _logger.Trace("Skipping refresh of {0}. Reason: not after automatic scans", series);
+                return;
+            }
+
             try
             {
                 _diskScanService.Scan(series);
@@ -158,7 +176,8 @@ namespace NzbDrone.Core.Tv
 
         public void Execute(RefreshSeriesCommand message)
         {
-            _eventAggregator.PublishEvent(new SeriesRefreshStartingEvent(message.Trigger == CommandTrigger.Manual));
+            var trigger = message.Trigger;
+            _eventAggregator.PublishEvent(new SeriesRefreshStartingEvent(trigger == CommandTrigger.Manual));
 
             if (message.SeriesId.HasValue)
             {
@@ -171,7 +190,7 @@ namespace NzbDrone.Core.Tv
                 catch (Exception e)
                 {
                     _logger.Error(e, "Couldn't refresh info for {0}", series);
-                    RescanSeries(series);
+                    RescanSeries(series, trigger);
                     throw;
                 }
             }
@@ -181,7 +200,7 @@ namespace NzbDrone.Core.Tv
 
                 foreach (var series in allSeries)
                 {
-                    if (message.Trigger == CommandTrigger.Manual || _checkIfSeriesShouldBeRefreshed.ShouldRefresh(series))
+                    if (trigger == CommandTrigger.Manual || _checkIfSeriesShouldBeRefreshed.ShouldRefresh(series))
                     {
                         try
                         {
@@ -190,14 +209,14 @@ namespace NzbDrone.Core.Tv
                         catch (Exception e)
                         {
                             _logger.Error(e, "Couldn't refresh info for {0}", series);
-                            RescanSeries(series);
+                            RescanSeries(series, trigger);
                         }
                     }
 
                     else
                     {
                         _logger.Info("Skipping refresh of series: {0}", series.Title);
-                        RescanSeries(series);
+                        RescanSeries(series, trigger);
                     }
                 }
             }

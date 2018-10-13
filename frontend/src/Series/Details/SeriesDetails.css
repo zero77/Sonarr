@@ -84,13 +84,14 @@
 }
 
 .seriesNavigationButtons {
-  white-space: no-wrap;
+  white-space: nowrap;
 }
 
 .seriesNavigationButton {
   composes: button from 'Components/Link/IconButton.css';
 
   margin-left: 5px;
+  width: 30px;
   color: #e1e2e3;
   white-space: nowrap;
 

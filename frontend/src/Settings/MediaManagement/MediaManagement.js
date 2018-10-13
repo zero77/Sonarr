@@ -12,6 +12,18 @@ import FormLabel from 'Components/Form/FormLabel';
 import FormInputGroup from 'Components/Form/FormInputGroup';
 import NamingConnector from './Naming/NamingConnector';
 
+const rescanAfterRefreshOptions = [
+  { key: 'always', value: 'Always' },
+  { key: 'afterManual', value: 'After Manual Refresh' },
+  { key: 'never', value: 'Never' }
+];
+
+const fileDateOptions = [
+  { key: 'none', value: 'None' },
+  { key: 'localAirDate', value: 'Local Air Date' },
+  { key: 'utcAirDate', value: 'UTC Air Date' }
+];
+
 class MediaManagement extends Component {
 
   //
@@ -29,12 +41,6 @@ class MediaManagement extends Component {
       onSavePress,
       ...otherProps
     } = this.props;
-
-    const fileDateOptions = [
-      { key: 'none', value: 'None' },
-      { key: 'localAirDate', value: 'Local Air Date' },
-      { key: 'utcAirDate', value: 'UTC Air Date' }
-    ];
 
     return (
       <PageContent title="Media Management Settings">
@@ -217,6 +223,23 @@ class MediaManagement extends Component {
                       helpText="Extract video information such as resolution, runtime and codec information from files. This requires Sonarr to read parts of the file which may cause high disk or network activity during scans."
                       onChange={onInputChange}
                       {...settings.enableMediaInfo}
+                    />
+                  </FormGroup>
+
+                  <FormGroup
+                    advancedSettings={advancedSettings}
+                    isAdvanced={true}
+                  >
+                    <FormLabel>Rescan Series Folder after Refresh</FormLabel>
+
+                    <FormInputGroup
+                      type={inputTypes.SELECT}
+                      name="rescanAfterRefresh"
+                      helpText="Rescan the series foler after refreshing the series"
+                      helpTextWarning="Sonarr will not automatically detect changes to files when not set to 'Always'"
+                      values={rescanAfterRefreshOptions}
+                      onChange={onInputChange}
+                      {...settings.rescanAfterRefresh}
                     />
                   </FormGroup>
 

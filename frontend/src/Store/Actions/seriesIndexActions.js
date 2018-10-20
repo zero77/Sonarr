@@ -27,7 +27,8 @@ export const defaultState = {
     size: 'large',
     showTitle: false,
     showMonitored: true,
-    showQualityProfile: true
+    showQualityProfile: true,
+    showSearchAction: false
   },
 
   overviewOptions: {
@@ -40,7 +41,12 @@ export const defaultState = {
     showAdded: false,
     showSeasonCount: true,
     showPath: false,
-    showSizeOnDisk: false
+    showSizeOnDisk: false,
+    showSearchAction: false
+  },
+
+  tableOptions: {
+    showSearchAction: false
   },
 
   columns: [
@@ -354,7 +360,8 @@ export const persistState = [
   'seriesIndex.view',
   'seriesIndex.columns',
   'seriesIndex.posterOptions',
-  'seriesIndex.overviewOptions'
+  'seriesIndex.overviewOptions',
+  'seriesIndex.tableOptions'
 ];
 
 //

@@ -83,11 +83,14 @@ class SeriesIndexPoster extends Component {
       showMonitored,
       showQualityProfile,
       qualityProfile,
+      showSearchAction,
       showRelativeDates,
       shortDateFormat,
       timeFormat,
       isRefreshingSeries,
+      isSearchingSeries,
       onRefreshSeriesPress,
+      onSearchPress,
       ...otherProps
     } = this.props;
 
@@ -123,6 +126,17 @@ class SeriesIndexPoster extends Component {
                 isSpinning={isRefreshingSeries}
                 onPress={onRefreshSeriesPress}
               />
+
+              {
+                showSearchAction &&
+                  <SpinnerIconButton
+                    className={styles.action}
+                    name={icons.SEARCH}
+                    title="Search for monitored episodes"
+                    isSpinning={isSearchingSeries}
+                    onPress={onSearchPress}
+                  />
+              }
 
               <IconButton
                 className={styles.action}
@@ -258,11 +272,14 @@ SeriesIndexPoster.propTypes = {
   showMonitored: PropTypes.bool.isRequired,
   showQualityProfile: PropTypes.bool.isRequired,
   qualityProfile: PropTypes.object.isRequired,
+  showSearchAction: PropTypes.bool.isRequired,
   showRelativeDates: PropTypes.bool.isRequired,
   shortDateFormat: PropTypes.string.isRequired,
   timeFormat: PropTypes.string.isRequired,
   isRefreshingSeries: PropTypes.bool.isRequired,
-  onRefreshSeriesPress: PropTypes.func.isRequired
+  isSearchingSeries: PropTypes.bool.isRequired,
+  onRefreshSeriesPress: PropTypes.func.isRequired,
+  onSearchPress: PropTypes.func.isRequired
 };
 
 SeriesIndexPoster.defaultProps = {

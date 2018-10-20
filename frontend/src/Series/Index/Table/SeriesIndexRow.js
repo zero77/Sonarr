@@ -81,9 +81,12 @@ class SeriesIndexRow extends Component {
       certification,
       tags,
       useSceneNumbering,
+      showSearchAction,
       columns,
       isRefreshingSeries,
-      onRefreshSeriesPress
+      isSearchingSeries,
+      onRefreshSeriesPress,
+      onSearchPress
     } = this.props;
 
     const {
@@ -380,6 +383,17 @@ class SeriesIndexRow extends Component {
                     onPress={onRefreshSeriesPress}
                   />
 
+                  {
+                    showSearchAction &&
+                      <SpinnerIconButton
+                        className={styles.action}
+                        name={icons.SEARCH}
+                        title="Search for monitored episodes"
+                        isSpinning={isSearchingSeries}
+                        onPress={onSearchPress}
+                      />
+                  }
+
                   <IconButton
                     name={icons.EDIT}
                     title="Edit Series"
@@ -431,9 +445,12 @@ SeriesIndexRow.propTypes = {
   certification: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.number).isRequired,
   useSceneNumbering: PropTypes.bool.isRequired,
+  showSearchAction: PropTypes.bool.isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   isRefreshingSeries: PropTypes.bool.isRequired,
-  onRefreshSeriesPress: PropTypes.func.isRequired
+  isSearchingSeries: PropTypes.bool.isRequired,
+  onRefreshSeriesPress: PropTypes.func.isRequired,
+  onSearchPress: PropTypes.func.isRequired
 };
 
 SeriesIndexRow.defaultProps = {

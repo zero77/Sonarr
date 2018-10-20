@@ -11,16 +11,49 @@ import createLanguageProfileSelector from 'Store/Selectors/createLanguageProfile
 import { executeCommand } from 'Store/Actions/commandActions';
 import * as commandNames from 'Commands/commandNames';
 
+function selectShowSearchAction() {
+  return createSelector(
+    (state) => state.seriesIndex,
+    (seriesIndex) => {
+      const view = seriesIndex.view;
+
+      switch (view) {
+        case 'posters':
+          return seriesIndex.posterOptions.showSearchAction;
+        case 'overview':
+          return seriesIndex.overviewOptions.showSearchAction;
+        default:
+          return seriesIndex.tableOptions.showSearchAction;
+      }
+    }
+  );
+}
+
 function createMapStateToProps() {
   return createSelector(
     createSeriesSelector(),
     createQualityProfileSelector(),
     createLanguageProfileSelector(),
+    selectShowSearchAction(),
     createCommandsSelector(),
-    (series, qualityProfile, languageProfile, commands) => {
+    (
+      series,
+      qualityProfile,
+      languageProfile,
+      showSearchAction,
+      commands
+    ) => {
       const isRefreshingSeries = commands.some((command) => {
         return (
           command.name === commandNames.REFRESH_SERIES &&
+          command.body.seriesId === series.id &&
+          isCommandExecuting(command)
+        );
+      });
+
+      const isSearchingSeries = commands.some((command) => {
+        return (
+          command.name === commandNames.SERIES_SEARCH &&
           command.body.seriesId === series.id &&
           isCommandExecuting(command)
         );
@@ -33,7 +66,9 @@ function createMapStateToProps() {
         qualityProfile,
         languageProfile,
         latestSeason,
-        isRefreshingSeries
+        showSearchAction,
+        isRefreshingSeries,
+        isSearchingSeries
       };
     }
   );
@@ -55,6 +90,13 @@ class SeriesIndexItemConnector extends Component {
     });
   }
 
+  onSearchPress = () => {
+    this.props.executeCommand({
+      name: commandNames.SERIES_SEARCH,
+      seriesId: this.props.id
+    });
+  }
+
   //
   // Render
 
@@ -68,6 +110,7 @@ class SeriesIndexItemConnector extends Component {
       <ItemComponent
         {...otherProps}
         onRefreshSeriesPress={this.onRefreshSeriesPress}
+        onSearchPress={this.onSearchPress}
       />
     );
   }

@@ -84,6 +84,7 @@ class SeriesIndexOverview extends Component {
       posterHeight,
       qualityProfile,
       overviewOptions,
+      showSearchAction,
       showRelativeDates,
       shortDateFormat,
       longDateFormat,
@@ -91,7 +92,9 @@ class SeriesIndexOverview extends Component {
       rowHeight,
       isSmallScreen,
       isRefreshingSeries,
+      isSearchingSeries,
       onRefreshSeriesPress,
+      onSearchPress,
       ...otherProps
     } = this.props;
 
@@ -174,6 +177,17 @@ class SeriesIndexOverview extends Component {
                   onPress={onRefreshSeriesPress}
                 />
 
+                {
+                  showSearchAction &&
+                    <SpinnerIconButton
+                      className={styles.action}
+                      name={icons.SEARCH}
+                      title="Search for monitored episodes"
+                      isSpinning={isSearchingSeries}
+                      onPress={onSearchPress}
+                    />
+                }
+
                 <IconButton
                   name={icons.EDIT}
                   title="Edit Series"
@@ -243,12 +257,14 @@ SeriesIndexOverview.propTypes = {
   rowHeight: PropTypes.number.isRequired,
   qualityProfile: PropTypes.object.isRequired,
   overviewOptions: PropTypes.object.isRequired,
+  showSearchAction: PropTypes.bool.isRequired,
   showRelativeDates: PropTypes.bool.isRequired,
   shortDateFormat: PropTypes.string.isRequired,
   longDateFormat: PropTypes.string.isRequired,
   timeFormat: PropTypes.string.isRequired,
   isSmallScreen: PropTypes.bool.isRequired,
   isRefreshingSeries: PropTypes.bool.isRequired,
+  isSearchingSeries: PropTypes.bool.isRequired,
   onRefreshSeriesPress: PropTypes.func.isRequired
 };
 

@@ -36,7 +36,8 @@ class SeriesIndexOverviewOptionsModalContent extends Component {
       showAdded: props.showAdded,
       showSeasonCount: props.showSeasonCount,
       showPath: props.showPath,
-      showSizeOnDisk: props.showSizeOnDisk
+      showSizeOnDisk: props.showSizeOnDisk,
+      showSearchAction: props.showSearchAction
     };
   }
 
@@ -51,7 +52,8 @@ class SeriesIndexOverviewOptionsModalContent extends Component {
       showAdded,
       showSeasonCount,
       showPath,
-      showSizeOnDisk
+      showSizeOnDisk,
+      showSearchAction
     } = this.props;
 
     const state = {};
@@ -96,6 +98,10 @@ class SeriesIndexOverviewOptionsModalContent extends Component {
       state.showSizeOnDisk = showSizeOnDisk;
     }
 
+    if (showSearchAction !== prevProps.showSearchAction) {
+      state.showSearchAction = showSearchAction;
+    }
+
     if (!_.isEmpty(state)) {
       this.setState(state);
     }
@@ -130,7 +136,8 @@ class SeriesIndexOverviewOptionsModalContent extends Component {
       showAdded,
       showSeasonCount,
       showPath,
-      showSizeOnDisk
+      showSizeOnDisk,
+      showSearchAction
     } = this.state;
 
     return (
@@ -252,6 +259,18 @@ class SeriesIndexOverviewOptionsModalContent extends Component {
                 onChange={this.onChangeOverviewOption}
               />
             </FormGroup>
+
+            <FormGroup>
+              <FormLabel>Show Search</FormLabel>
+
+              <FormInputGroup
+                type={inputTypes.CHECK}
+                name="showSearchAction"
+                value={showSearchAction}
+                helpText="Show search button on hover"
+                onChange={this.onChangeOverviewOption}
+              />
+            </FormGroup>
           </Form>
         </ModalBody>
 
@@ -269,6 +288,7 @@ class SeriesIndexOverviewOptionsModalContent extends Component {
 
 SeriesIndexOverviewOptionsModalContent.propTypes = {
   size: PropTypes.string.isRequired,
+  detailedProgressBar: PropTypes.bool.isRequired,
   showMonitored: PropTypes.bool.isRequired,
   showNetwork: PropTypes.bool.isRequired,
   showQualityProfile: PropTypes.bool.isRequired,
@@ -277,7 +297,7 @@ SeriesIndexOverviewOptionsModalContent.propTypes = {
   showSeasonCount: PropTypes.bool.isRequired,
   showPath: PropTypes.bool.isRequired,
   showSizeOnDisk: PropTypes.bool.isRequired,
-  detailedProgressBar: PropTypes.bool.isRequired,
+  showSearchAction: PropTypes.bool.isRequired,
   onChangeOverviewOption: PropTypes.func.isRequired,
   onModalClose: PropTypes.func.isRequired
 };

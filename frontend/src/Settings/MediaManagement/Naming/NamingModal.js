@@ -13,6 +13,99 @@ import ModalFooter from 'Components/Modal/ModalFooter';
 import NamingOption from './NamingOption';
 import styles from './NamingModal.css';
 
+const separatorOptions = [
+  { key: ' ', value: 'Space ( )' },
+  { key: '.', value: 'Period (.)' },
+  { key: '_', value: 'Underscore (_)' },
+  { key: '-', value: 'Dash (-)' }
+];
+
+const caseOptions = [
+  { key: 'title', value: 'Default Case' },
+  { key: 'lower', value: 'Lower Case' },
+  { key: 'upper', value: 'Upper Case' }
+];
+
+const fileNameTokens = [
+  {
+    token: '{Series Title} - S{season:00}E{episode:00} - {Episode Title} {Quality Full}',
+    example: 'Series Title (2010) - S01E01 - Episode Title HDTV-720p Proper'
+  },
+  {
+    token: '{Series Title} - {season:0}x{episode:00} - {Episode Title} {Quality Full}',
+    example: 'Series Title (2010) - 1x01 - Episode Title HDTV-720p Proper'
+  },
+  {
+    token: '{Series.Title}.S{season:00}E{episode:00}.{EpisodeClean.Title}.{Quality.Full}',
+    example: 'Series.Title.(2010).S01E01.Episode.Title.HDTV-720p'
+  }
+];
+
+const seriesTokens = [
+  { token: '{Series Title}', example: 'Series Title!' },
+  { token: '{Series CleanTitle}', example: 'Series Title' },
+  { token: '{Series CleanTitleYear}', example: 'Series Title 2010' },
+  { token: '{Series TitleThe}', example: 'Series Title, The' },
+  { token: '{Series TitleTheYear}', example: 'Series Title, The (2010)' },
+  { token: '{Series TitleYear}', example: 'Series Title (2010)' },
+  { token: '{Series TitleFirstCharacter}', example: 'S' }
+];
+
+const seriesIdTokens = [
+  { token: '{ImdbId}', example: 'tt12345' },
+  { token: '{TvdbId}', example: '12345' },
+  { token: '{TvMazeId}', example: '54321' }
+];
+
+const seasonTokens = [
+  { token: '{season:0}', example: '1' },
+  { token: '{season:00}', example: '01' }
+];
+
+const episodeTokens = [
+  { token: '{episode:0}', example: '1' },
+  { token: '{episode:00}', example: '01' }
+];
+
+const airDateTokens = [
+  { token: '{Air-Date}', example: '2016-03-20' },
+  { token: '{Air Date}', example: '2016 03 20' }
+];
+
+const absoluteTokens = [
+  { token: '{absolute:0}', example: '1' },
+  { token: '{absolute:00}', example: '01' },
+  { token: '{absolute:000}', example: '001' }
+];
+
+const episodeTitleTokens = [
+  { token: '{Episode Title}', example: 'Episode Title' },
+  { token: '{Episode CleanTitle}', example: 'Episode Title' }
+];
+
+const qualityTokens = [
+  { token: '{Quality Full}', example: 'HDTV 720p Proper' },
+  { token: '{Quality Title}', example: 'HDTV 720p' }
+];
+
+const mediaInfoTokens = [
+  { token: '{MediaInfo Simple}', example: 'x264 DTS' },
+  { token: '{MediaInfo Full}', example: 'x264 DTS [EN+DE]' },
+  { token: '{MediaInfo VideoCodec}', example: 'x264' },
+  { token: '{MediaInfo AudioFormat}', example: 'DTS' },
+  { token: '{MediaInfo AudioChannels}', example: '5.1' }
+];
+
+const otherTokens = [
+  { token: '{Release Group}', example: 'Rls Grp' },
+  { token: '{Preferred Words}', example: 'iNTERNAL' }
+];
+
+const originalTokens = [
+  { token: '{Original Title}', example: 'Series.Title.S01E01.HDTV.x264-EVOLVE' },
+  { token: '{Original Filename}', example: 'series.title.s01e01.hdtv.x264-EVOLVE' }
+];
+
 class NamingModal extends Component {
 
   //
@@ -96,98 +189,6 @@ class NamingModal extends Component {
       separator: tokenSeparator,
       case: tokenCase
     } = this.state;
-
-    const separatorOptions = [
-      { key: ' ', value: 'Space ( )' },
-      { key: '.', value: 'Period (.)' },
-      { key: '_', value: 'Underscore (_)' },
-      { key: '-', value: 'Dash (-)' }
-    ];
-
-    const caseOptions = [
-      { key: 'title', value: 'Default Case' },
-      { key: 'lower', value: 'Lower Case' },
-      { key: 'upper', value: 'Upper Case' }
-    ];
-
-    const fileNameTokens = [
-      {
-        token: '{Series Title} - S{season:00}E{episode:00} - {Episode Title} {Quality Full}',
-        example: 'Series Title (2010) - S01E01 - Episode Title HDTV-720p Proper'
-      },
-      {
-        token: '{Series Title} - {season:0}x{episode:00} - {Episode Title} {Quality Full}',
-        example: 'Series Title (2010) - 1x01 - Episode Title HDTV-720p Proper'
-      },
-      {
-        token: '{Series.Title}.S{season:00}E{episode:00}.{EpisodeClean.Title}.{Quality.Full}',
-        example: 'Series.Title.(2010).S01E01.Episode.Title.HDTV-720p'
-      }
-    ];
-
-    const seriesTokens = [
-      { token: '{Series Title}', example: 'Series Title!' },
-      { token: '{Series CleanTitle}', example: 'Series Title' },
-      { token: '{Series CleanTitleYear}', example: 'Series Title 2010' },
-      { token: '{Series TitleThe}', example: 'Series Title, The' },
-      { token: '{Series TitleTheYear}', example: 'Series Title, The (2010)' },
-      { token: '{Series TitleYear}', example: 'Series Title (2010)' },
-      { token: '{Series TitleFirstCharacter}', example: 'S' }
-    ];
-
-    const seriesIdTokens = [
-      { token: '{ImdbId}', example: 'tt12345' },
-      { token: '{TvdbId}', example: '12345' },
-      { token: '{TvMazeId}', example: '54321' }
-    ];
-
-    const seasonTokens = [
-      { token: '{season:0}', example: '1' },
-      { token: '{season:00}', example: '01' }
-    ];
-
-    const episodeTokens = [
-      { token: '{episode:0}', example: '1' },
-      { token: '{episode:00}', example: '01' }
-    ];
-
-    const airDateTokens = [
-      { token: '{Air-Date}', example: '2016-03-20' },
-      { token: '{Air Date}', example: '2016 03 20' }
-    ];
-
-    const absoluteTokens = [
-      { token: '{absolute:0}', example: '1' },
-      { token: '{absolute:00}', example: '01' },
-      { token: '{absolute:000}', example: '001' }
-    ];
-
-    const episodeTitleTokens = [
-      { token: '{Episode Title}', example: 'Episode Title' },
-      { token: '{Episode CleanTitle}', example: 'Episode Title' }
-    ];
-
-    const qualityTokens = [
-      { token: '{Quality Full}', example: 'HDTV 720p Proper' },
-      { token: '{Quality Title}', example: 'HDTV 720p' }
-    ];
-
-    const mediaInfoTokens = [
-      { token: '{MediaInfo Simple}', example: 'x264 DTS' },
-      { token: '{MediaInfo Full}', example: 'x264 DTS [EN+DE]' },
-      { token: '{MediaInfo VideoCodec}', example: 'x264' },
-      { token: '{MediaInfo AudioFormat}', example: 'DTS' },
-      { token: '{MediaInfo AudioChannels}', example: '5.1' }
-    ];
-
-    const releaseGroupTokens = [
-      { token: '{Release Group}', example: 'Rls Grp' }
-    ];
-
-    const originalTokens = [
-      { token: '{Original Title}', example: 'Series.Title.S01E01.HDTV.x264-EVOLVE' },
-      { token: '{Original Filename}', example: 'series.title.s01e01.hdtv.x264-EVOLVE' }
-    ];
 
     return (
       <Modal
@@ -460,10 +461,10 @@ class NamingModal extends Component {
                     </div>
                   </FieldSet>
 
-                  <FieldSet legend="Release Group">
+                  <FieldSet legend="Other">
                     <div className={styles.groups}>
                       {
-                        releaseGroupTokens.map(({ token, example }) => {
+                        otherTokens.map(({ token, example }) => {
                           return (
                             <NamingOption
                               key={token}

@@ -2,6 +2,7 @@ export const AUTO_COMPLETE = 'autoComplete';
 export const CAPTCHA = 'captcha';
 export const CHECK = 'check';
 export const DEVICE = 'device';
+export const KEY_VALUE_LIST = 'keyValueList';
 export const MONITOR_EPISODES_SELECT = 'monitorEpisodesSelect';
 export const NUMBER = 'number';
 export const OAUTH = 'oauth';
@@ -21,6 +22,7 @@ export const all = [
   CAPTCHA,
   CHECK,
   DEVICE,
+  KEY_VALUE_LIST,
   MONITOR_EPISODES_SELECT,
   NUMBER,
   OAUTH,

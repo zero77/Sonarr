@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { sizes } from 'Helpers/Props';
 import Modal from 'Components/Modal/Modal';
 import EpisodeDetailsModalContentConnector from './EpisodeDetailsModalContentConnector';
 
@@ -18,6 +19,7 @@ class EpisodeDetailsModal extends Component {
     return (
       <Modal
         isOpen={isOpen}
+        size={sizes.EXTRA_LARGE}
         onModalClose={onModalClose}
       >
         <EpisodeDetailsModalContentConnector

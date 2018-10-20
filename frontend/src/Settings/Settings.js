@@ -32,7 +32,7 @@ function Settings() {
         </Link>
 
         <div className={styles.summary}>
-          Quality, Language and Delay profiles
+          Quality, Language, Delay and Release profiles
         </div>
 
         <Link
@@ -54,7 +54,7 @@ function Settings() {
         </Link>
 
         <div className={styles.summary}>
-          Indexers and release restrictions
+          Indexers and indexer options
         </div>
 
         <Link

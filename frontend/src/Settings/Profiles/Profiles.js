@@ -7,6 +7,7 @@ import SettingsToolbarConnector from 'Settings/SettingsToolbarConnector';
 import QualityProfilesConnector from './Quality/QualityProfilesConnector';
 import LanguageProfilesConnector from './Language/LanguageProfilesConnector';
 import DelayProfilesConnector from './Delay/DelayProfilesConnector';
+import ReleaseProfilesConnector from './Release/ReleaseProfilesConnector';
 
 class Profiles extends Component {
 
@@ -24,6 +25,7 @@ class Profiles extends Component {
           <QualityProfilesConnector />
           <LanguageProfilesConnector />
           <DelayProfilesConnector />
+          <ReleaseProfilesConnector />
         </PageContentBodyConnector>
       </PageContent>
     );

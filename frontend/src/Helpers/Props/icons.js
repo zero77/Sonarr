@@ -92,6 +92,7 @@ import {
   faTimes as fasTimes,
   faTimesCircle as fasTimesCircle,
   faUser as fasUser,
+  faUserPlus as fasUserPlus,
   faVial as fasVial,
   faWrench as fasWrench
 } from '@fortawesome/free-solid-svg-icons';
@@ -175,6 +176,7 @@ export const REORDER = fasBars;
 export const RSS = fasRss;
 export const SAVE = fasSave;
 export const SCHEDULED = farClock;
+export const SCORE = fasUserPlus;
 export const SEARCH = fasSearch;
 export const SERIES_CONTINUING = fasPlay;
 export const SERIES_ENDED = fasStop;

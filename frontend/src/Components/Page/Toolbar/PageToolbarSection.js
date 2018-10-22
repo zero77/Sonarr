@@ -97,8 +97,27 @@ class PageToolbarSection extends Component {
       isMeasured: false,
       width: 0,
       buttons: [],
+      buttonCount: 0,
       overflowItems: []
     };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      children,
+      collapseButtons
+    } = this.props;
+
+    const {
+      isMeasured,
+      width
+    } = this.state;
+
+    if (isMeasured === prevState.isMeasured && width === prevState.width) {
+      return;
+    }
+
+    this.setState(calculateOverflowItems(children, isMeasured, width, collapseButtons));
   }
 
   //
@@ -116,21 +135,15 @@ class PageToolbarSection extends Component {
 
   render() {
     const {
-      children,
-      alignContent,
-      collapseButtons
+      alignContent
     } = this.props;
 
     const {
       isMeasured,
-      width
-    } = this.state;
-
-    const {
       buttons,
       buttonCount,
       overflowItems
-    } = calculateOverflowItems(children, isMeasured, width, collapseButtons);
+    } = this.state;
 
     return (
       <Measure

@@ -148,19 +148,30 @@ namespace NzbDrone.Core.Tv
             return seasons;
         }
 
-        private void RescanSeries(Series series, CommandTrigger trigger)
+        private void RescanSeries(Series series, bool isNew, CommandTrigger trigger)
         {
-            var shouldResscan = _configService.RescanAfterRefresh;
+            var rescanAfterRefresh = _configService.RescanAfterRefresh;
+            var shouldRescan = true;
 
-            if (shouldResscan == RescanAfterRefreshType.Never)
+
+            if (isNew)
+            {
+                _logger.Trace("Forcing refresh of {0}. Reason: New series", series);
+                shouldRescan = true;
+            }
+            else if (rescanAfterRefresh == RescanAfterRefreshType.Never)
             {
                 _logger.Trace("Skipping refresh of {0}. Reason: never recan after refresh", series);
-                return;
+                shouldRescan = false;
             }
-
-            if (shouldResscan == RescanAfterRefreshType.AfterManual && trigger != CommandTrigger.Manual)
+            else if (rescanAfterRefresh == RescanAfterRefreshType.AfterManual && trigger != CommandTrigger.Manual)
             {
                 _logger.Trace("Skipping refresh of {0}. Reason: not after automatic scans", series);
+                shouldRescan = false;
+            }
+
+            if (!shouldRescan)
+            {
                 return;
             }
 
@@ -177,6 +188,7 @@ namespace NzbDrone.Core.Tv
         public void Execute(RefreshSeriesCommand message)
         {
             var trigger = message.Trigger;
+            var isNew = message.IsNewSeries;
             _eventAggregator.PublishEvent(new SeriesRefreshStartingEvent(trigger == CommandTrigger.Manual));
 
             if (message.SeriesId.HasValue)
@@ -186,11 +198,12 @@ namespace NzbDrone.Core.Tv
                 try
                 {
                     RefreshSeriesInfo(series);
+                    RescanSeries(series, message.IsNewSeries, trigger);
                 }
                 catch (Exception e)
                 {
                     _logger.Error(e, "Couldn't refresh info for {0}", series);
-                    RescanSeries(series, trigger);
+                    RescanSeries(series, message.IsNewSeries, trigger);
                     throw;
                 }
             }
@@ -209,14 +222,15 @@ namespace NzbDrone.Core.Tv
                         catch (Exception e)
                         {
                             _logger.Error(e, "Couldn't refresh info for {0}", series);
-                            RescanSeries(series, trigger);
                         }
+
+                        RescanSeries(series, false, trigger);
                     }
 
                     else
                     {
                         _logger.Info("Skipping refresh of series: {0}", series.Title);
-                        RescanSeries(series, trigger);
+                        RescanSeries(series, false, trigger);
                     }
                 }
             }

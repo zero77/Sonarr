@@ -8,12 +8,29 @@ import createSeriesSelector from 'Store/Selectors/createSeriesSelector';
 import { setSeriesValue, saveSeries } from 'Store/Actions/seriesActions';
 import EditSeriesModalContent from './EditSeriesModalContent';
 
+function createIsPathChangingSelector() {
+  return createSelector(
+    (state) => state.series.pendingChanges,
+    createSeriesSelector(),
+    (pendingChanges, series) => {
+      const path = pendingChanges.path;
+
+      if (path == null) {
+        return false;
+      }
+
+      return series.path !== path;
+    }
+  );
+}
+
 function createMapStateToProps() {
   return createSelector(
     (state) => state.series,
     (state) => state.settings.languageProfiles,
     createSeriesSelector(),
-    (seriesState, languageProfiles, series) => {
+    createIsPathChangingSelector(),
+    (seriesState, languageProfiles, series, isPathChanging) => {
       const {
         isSaving,
         saveError,
@@ -36,7 +53,7 @@ function createMapStateToProps() {
         title: series.title,
         isSaving,
         saveError,
-        isPathChanging: pendingChanges.hasOwnProperty('path'),
+        isPathChanging,
         originalPath: series.path,
         item: settings.settings,
         showLanguageProfile: languageProfiles.items.length > 1,

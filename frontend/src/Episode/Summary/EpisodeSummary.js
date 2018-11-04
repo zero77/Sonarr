@@ -143,6 +143,7 @@ class EpisodeSummary extends Component {
                   />
 
                   <IconButton
+                    title="Delete episode from disk"
                     name={icons.REMOVE}
                     onPress={this.onRemoveEpisodeFilePress}
                   />

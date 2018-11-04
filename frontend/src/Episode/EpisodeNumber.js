@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Fragment } from 'react';
 import padNumber from 'Utilities/Number/padNumber';
 import { icons, kinds, tooltipPositions } from 'Helpers/Props';
 import Icon from 'Components/Icon';
@@ -45,8 +45,12 @@ function EpisodeNumber(props) {
           <Popover
             anchor={
               <span>
-                {showSeasonNumber && seasonNumber != null}
-                {showSeasonNumber && 'x'}
+                {
+                  showSeasonNumber && seasonNumber != null &&
+                    <Fragment>
+                      {seasonNumber}x
+                    </Fragment>
+                }
 
                 {showSeasonNumber ? padNumber(episodeNumber, 2) : episodeNumber}
 
@@ -71,8 +75,12 @@ function EpisodeNumber(props) {
             position={tooltipPositions.RIGHT}
           /> :
           <span>
-            {showSeasonNumber && seasonNumber}
-            {showSeasonNumber && 'x'}
+            {
+              showSeasonNumber && seasonNumber != null &&
+                <Fragment>
+                  {seasonNumber}x
+                </Fragment>
+            }
 
             {showSeasonNumber ? padNumber(episodeNumber, 2) : episodeNumber}
 

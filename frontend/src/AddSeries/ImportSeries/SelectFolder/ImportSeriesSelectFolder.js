@@ -68,6 +68,7 @@ class ImportSeriesSelectFolder extends Component {
 
   render() {
     const {
+      isWindows,
       isFetching,
       isPopulated,
       error,
@@ -101,7 +102,7 @@ class ImportSeriesSelectFolder extends Component {
                       Make sure your files include the quality in the name. eg. <span className={styles.code}>episode.s02e15.bluray.mkv</span>
                     </li>
                     <li className={styles.tip}>
-                      Point Sonarr to the folder containing all of your tv shows not a specific one. eg. <span className={styles.code}>"\tv shows\"</span> and not <span className={styles.code}>"\tv shows\the simpsons\"</span>
+                      Point Sonarr to the folder containing all of your tv shows not a specific one. eg. <span className={styles.code}>"{isWindows ? 'C:\\tv shows' : '/tv shows'}"</span> and not <span className={styles.code}>"{isWindows ? 'C:\\tv shows\\the simpsons' : '/tv shows/the simpsons'}"</span>
                     </li>
                   </ul>
                 </div>
@@ -175,6 +176,7 @@ class ImportSeriesSelectFolder extends Component {
 }
 
 ImportSeriesSelectFolder.propTypes = {
+  isWindows: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   isPopulated: PropTypes.bool.isRequired,
   error: PropTypes.object,

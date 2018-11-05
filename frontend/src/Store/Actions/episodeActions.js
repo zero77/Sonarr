@@ -130,11 +130,9 @@ export const actionHandlers = handleThunks({
       monitored
     } = payload;
 
-    const episodeSection = _.last(episodeEntity.split('.'));
-
     dispatch(updateItem({
       id,
-      section: episodeSection,
+      section: episodeEntity,
       isSaving: true
     }));
 
@@ -148,7 +146,7 @@ export const actionHandlers = handleThunks({
     promise.done((data) => {
       dispatch(updateItem({
         id,
-        section: episodeSection,
+        section: episodeEntity,
         isSaving: false,
         monitored
       }));
@@ -157,7 +155,7 @@ export const actionHandlers = handleThunks({
     promise.fail((xhr) => {
       dispatch(updateItem({
         id,
-        section: episodeSection,
+        section: episodeEntity,
         isSaving: false
       }));
     });

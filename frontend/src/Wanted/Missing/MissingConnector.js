@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -20,7 +19,7 @@ function createMapStateToProps() {
     (missing, isSearchingForMissingEpisodes) => {
       return {
         isSearchingForMissingEpisodes,
-        isSaving: _.some(missing.items, { isSaving: true }),
+        isSaving: missing.items.filter((m) => m.isSaving).length > 1,
         ...missing
       };
     }
@@ -131,7 +130,6 @@ class MissingConnector extends Component {
         onFilterSelect={this.onFilterSelect}
         onTableOptionChange={this.onTableOptionChange}
         onSearchSelectedPress={this.onSearchSelectedPress}
-        onToggleSelectedPress={this.onToggleSelectedPress}
         onSearchAllMissingPress={this.onSearchAllMissingPress}
         {...this.props}
       />

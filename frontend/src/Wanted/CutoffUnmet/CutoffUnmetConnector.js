@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -21,7 +20,7 @@ function createMapStateToProps() {
     (cutoffUnmet, isSearchingForCutoffUnmetEpisodes) => {
       return {
         isSearchingForCutoffUnmetEpisodes,
-        isSaving: _.some(cutoffUnmet.items, { isSaving: true }),
+        isSaving: cutoffUnmet.items.filter((m) => m.isSaving).length > 1,
         ...cutoffUnmet
       };
     }

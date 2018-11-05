@@ -30,6 +30,7 @@ import {
   faBookmark as fasBookmark,
   faBookReader as fasBookReader,
   faBug as fasBug,
+  faBroadcastTower as fasBroadcastTower,
   faCalendarAlt as fasCalendarAlt,
   faCaretDown as fasCaretDown,
   faCheck as fasCheck,
@@ -76,7 +77,6 @@ import {
   faRocket as fasRocket,
   faSave as fasSave,
   faSearch as fasSearch,
-  faSignal as fasSignal,
   faSignOutAlt as fasSignOutAlt,
   faSitemap as fasSitemap,
   faSpinner as fasSpinner,
@@ -150,7 +150,7 @@ export const LOGOUT = fasSignOutAlt;
 export const MEDIA_INFO = farFileInvoice;
 export const MISSING = fasExclamationTriangle;
 export const MONITORED = fasBookmark;
-export const NETWORK = fasSignal;
+export const NETWORK = fasBroadcastTower;
 export const NAVBAR_COLLAPSE = fasBars;
 export const NOT_AIRED = farClock;
 export const ORGANIZE = fasSitemap;

@@ -9,6 +9,7 @@ import ModalContent from 'Components/Modal/ModalContent';
 import ModalHeader from 'Components/Modal/ModalHeader';
 import ModalBody from 'Components/Modal/ModalBody';
 import ModalFooter from 'Components/Modal/ModalFooter';
+import TagDetailsDelayProfile from './TagDetailsDelayProfile';
 import styles from './TagDetailsModalContent.css';
 
 function TagDetailsModalContent(props) {
@@ -52,13 +53,27 @@ function TagDetailsModalContent(props) {
 
         {
           !!delayProfiles.length &&
-            <FieldSet legend="Delay Profiles">
+            <FieldSet legend="Delay Profile">
               {
                 delayProfiles.map((item) => {
+                  const {
+                    id,
+                    preferredProtocol,
+                    enableUsenet,
+                    enableTorrent,
+                    usenetDelay,
+                    torrentDelay
+                  } = item;
+
                   return (
-                    <div key={item.id}>
-                      {item.name}
-                    </div>
+                    <TagDetailsDelayProfile
+                      key={id}
+                      preferredProtocol={preferredProtocol}
+                      enableUsenet={enableUsenet}
+                      enableTorrent={enableTorrent}
+                      usenetDelay={usenetDelay}
+                      torrentDelay={torrentDelay}
+                    />
                   );
                 })
               }

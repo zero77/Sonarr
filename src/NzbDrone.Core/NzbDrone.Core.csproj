@@ -139,6 +139,7 @@
     <Compile Include="CustomFilters\CustomFilterRepository.cs" />
     <Compile Include="CustomFilters\CustomFilterService.cs" />
     <Compile Include="Datastore\Migration\126_add_custom_filters.cs" />
+    <Compile Include="Extras\Metadata\MetadataSectionType.cs" />
     <Compile Include="Indexers\SeedConfigProvider.cs" />
     <Compile Include="DataAugmentation\DailySeries\DailySeries.cs" />
     <Compile Include="DataAugmentation\DailySeries\DailySeriesDataProxy.cs" />

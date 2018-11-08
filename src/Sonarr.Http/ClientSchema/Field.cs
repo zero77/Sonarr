@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Sonarr.Http.ClientSchema
 {
@@ -14,6 +14,7 @@ namespace Sonarr.Http.ClientSchema
         public string Type { get; set; }
         public bool Advanced { get; set; }
         public List<SelectOption> SelectOptions { get; set; }
+        public string Section { get; set; }
 
         public Field Clone()
         {

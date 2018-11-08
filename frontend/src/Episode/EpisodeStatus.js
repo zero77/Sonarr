@@ -89,6 +89,7 @@ function EpisodeStatus(props) {
       <div className={styles.center}>
         <Icon
           name={icons.UNMONITORED}
+          kind={kinds.DISABLED}
           title="Episode is not monitored"
         />
       </div>

@@ -30,6 +30,15 @@
   }
 }
 
+.disabled {
+  border-color: $disabledColor;
+  background-color: $disabledColor;
+
+  &.outline {
+    color: $disabledColor;
+  }
+}
+
 .info {
   border-color: $infoColor;
   background-color: $infoColor;

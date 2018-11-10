@@ -49,7 +49,7 @@
   border-left-color: $gray !important;
 
   &:global(.colorImpaired) {
-    background: repeating-linear-gradient(45deg, transparent, transparent 5px, #eee 5px, #eee 10px);
+    background: repeating-linear-gradient(45deg, transparent, transparent 5px, $colorImpairedGradient 5px, $colorImpairedGradient 10px);
   }
 }
 
@@ -57,7 +57,7 @@
   border-left-color: $warningColor !important;
 
   &:global(.colorImpaired) {
-    background: repeating-linear-gradient(90deg, transparent, transparent 5px, #eee 5px, #eee 10px);
+    background: repeating-linear-gradient(90deg, transparent, transparent 5px, $colorImpairedGradient 5px, $colorImpairedGradient 10px);
   }
 }
 
@@ -65,7 +65,7 @@
   border-left-color: $dangerColor !important;
 
   &:global(.colorImpaired) {
-    background: repeating-linear-gradient(90deg, transparent, transparent 5px, #eee 5px, #eee 10px);
+    background: repeating-linear-gradient(90deg, transparent, transparent 5px, $colorImpairedGradient 5px, $colorImpairedGradient 10px);
   }
 }
 
@@ -73,6 +73,6 @@
   border-left-color: $primaryColor !important;
 
   &:global(.colorImpaired) {
-    background: repeating-linear-gradient(90deg, transparent, transparent 5px, #eee 5px, #eee 10px);
+    background: repeating-linear-gradient(90deg, transparent, transparent 5px, $colorImpairedGradient 5px, $colorImpairedGradient 10px);
   }
 }

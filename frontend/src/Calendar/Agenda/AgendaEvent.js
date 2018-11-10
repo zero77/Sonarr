@@ -58,7 +58,8 @@ class AgendaEvent extends Component {
       showFinaleIcon,
       showCutoffUnmetIcon,
       timeFormat,
-      longDateFormat
+      longDateFormat,
+      colorImpairedMode
     } = this.props;
 
     const startTime = moment(airDateUtc);
@@ -86,117 +87,118 @@ class AgendaEvent extends Component {
 
           <div
             className={classNames(
-              styles.status,
-              styles[statusStyle]
+              styles.eventWrapper,
+              styles[statusStyle],
+              colorImpairedMode && 'colorImpaired'
             )}
-          />
+          >
+            <div className={styles.time}>
+              {formatTime(airDateUtc, timeFormat)} - {formatTime(endTime.toISOString(), timeFormat, { includeMinuteZero: true })}
+            </div>
 
-          <div className={styles.time}>
-            {formatTime(airDateUtc, timeFormat)} - {formatTime(endTime.toISOString(), timeFormat, { includeMinuteZero: true })}
-          </div>
+            <div className={styles.seriesTitle}>
+              {series.title}
+            </div>
 
-          <div className={styles.seriesTitle}>
-            {series.title}
-          </div>
-
-          {
-            showEpisodeInformation &&
-              <div className={styles.seasonEpisodeNumber}>
-                {seasonNumber}x{padNumber(episodeNumber, 2)}
-
-                {
-                  series.seriesType === 'anime' && absoluteEpisodeNumber &&
-                    <span className={styles.absoluteEpisodeNumber}>({absoluteEpisodeNumber})</span>
-                }
-
-                <div className={styles.episodeSeparator}> - </div>
-              </div>
-          }
-
-          <div className={styles.episodeTitle}>
             {
               showEpisodeInformation &&
+                <div className={styles.seasonEpisodeNumber}>
+                  {seasonNumber}x{padNumber(episodeNumber, 2)}
+
+                  {
+                    series.seriesType === 'anime' && absoluteEpisodeNumber &&
+                      <span className={styles.absoluteEpisodeNumber}>({absoluteEpisodeNumber})</span>
+                  }
+
+                  <div className={styles.episodeSeparator}> - </div>
+                </div>
+            }
+
+            <div className={styles.episodeTitle}>
+              {
+                showEpisodeInformation &&
                 title
+              }
+            </div>
+
+            {
+              missingAbsoluteNumber &&
+                <Icon
+                  className={styles.statusIcon}
+                  name={icons.WARNING}
+                  title="Episode does not have an absolute episode number"
+                />
+            }
+
+            {
+              !!queueItem &&
+                <span className={styles.statusIcon}>
+                  <CalendarEventQueueDetails
+                    seriesType={series.seriesType}
+                    seasonNumber={seasonNumber}
+                    absoluteEpisodeNumber={absoluteEpisodeNumber}
+                    {...queueItem}
+                  />
+                </span>
+            }
+
+            {
+              !queueItem && grabbed &&
+                <Icon
+                  className={styles.statusIcon}
+                  name={icons.DOWNLOADING}
+                  title="Episode is downloading"
+                />
+            }
+
+            {
+              showCutoffUnmetIcon &&
+              !!episodeFile &&
+              episodeFile.qualityCutoffNotMet &&
+                <Icon
+                  className={styles.statusIcon}
+                  name={icons.EPISODE_FILE}
+                  kind={kinds.WARNING}
+                  title="Quality cutoff has not been met"
+                />
+            }
+
+            {
+              showCutoffUnmetIcon &&
+              !!episodeFile &&
+              episodeFile.languageCutoffNotMet &&
+              !episodeFile.qualityCutoffNotMet &&
+                <Icon
+                  className={styles.statusIcon}
+                  name={icons.EPISODE_FILE}
+                  kind={kinds.WARNING}
+                  title="Language cutoff has not been met"
+                />
+            }
+
+            {
+              episodeNumber === 1 && seasonNumber > 0 &&
+                <Icon
+                  className={styles.statusIcon}
+                  name={icons.INFO}
+                  kind={kinds.INFO}
+                  title={seasonNumber === 1 ? 'Series Premiere' : 'Season Premiere'}
+                />
+            }
+
+            {
+              showFinaleIcon &&
+              episodeNumber !== 1 &&
+              seasonNumber > 0 &&
+              episodeNumber === seasonStatistics.totalEpisodeCount &&
+                <Icon
+                  className={styles.statusIcon}
+                  name={icons.INFO}
+                  kind={kinds.WARNING}
+                  title={series.status === 'ended' ? 'Series finale' : 'Season finale'}
+                />
             }
           </div>
-
-          {
-            missingAbsoluteNumber &&
-              <Icon
-                className={styles.statusIcon}
-                name={icons.WARNING}
-                title="Episode does not have an absolute episode number"
-              />
-          }
-
-          {
-            !!queueItem &&
-              <span className={styles.statusIcon}>
-                <CalendarEventQueueDetails
-                  seriesType={series.seriesType}
-                  seasonNumber={seasonNumber}
-                  absoluteEpisodeNumber={absoluteEpisodeNumber}
-                  {...queueItem}
-                />
-              </span>
-          }
-
-          {
-            !queueItem && grabbed &&
-              <Icon
-                className={styles.statusIcon}
-                name={icons.DOWNLOADING}
-                title="Episode is downloading"
-              />
-          }
-
-          {
-            showCutoffUnmetIcon &&
-            !!episodeFile &&
-            episodeFile.qualityCutoffNotMet &&
-              <Icon
-                className={styles.statusIcon}
-                name={icons.EPISODE_FILE}
-                kind={kinds.WARNING}
-                title="Quality cutoff has not been met"
-              />
-          }
-
-          {
-            showCutoffUnmetIcon &&
-            !!episodeFile &&
-            episodeFile.languageCutoffNotMet &&
-            !episodeFile.qualityCutoffNotMet &&
-              <Icon
-                className={styles.statusIcon}
-                name={icons.EPISODE_FILE}
-                kind={kinds.WARNING}
-                title="Language cutoff has not been met"
-              />
-          }
-
-          {
-            episodeNumber === 1 && seasonNumber > 0 &&
-              <Icon
-                className={styles.statusIcon}
-                name={icons.INFO}
-                kind={kinds.INFO}
-                title={seasonNumber === 1 ? 'Series Premiere' : 'Season Premiere'}
-              />
-          }
-
-          {
-            showFinaleIcon &&
-            episodeNumber !== 1 &&
-            seasonNumber > 0 &&
-            episodeNumber === seasonStatistics.totalEpisodeCount &&
-              <Icon
-                className={styles.statusIcon}
-                name={icons.INFO}
-                kind={kinds.WARNING}
-                title={series.status === 'ended' ? 'Series finale' : 'Season finale'}
-              />
-          }
         </Link>
 
         <EpisodeDetailsModal
@@ -231,7 +233,8 @@ AgendaEvent.propTypes = {
   showFinaleIcon: PropTypes.bool.isRequired,
   showCutoffUnmetIcon: PropTypes.bool.isRequired,
   timeFormat: PropTypes.string.isRequired,
-  longDateFormat: PropTypes.string.isRequired
+  longDateFormat: PropTypes.string.isRequired,
+  colorImpairedMode: PropTypes.bool.isRequired
 };
 
 export default AgendaEvent;

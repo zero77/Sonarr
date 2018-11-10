@@ -24,13 +24,15 @@ class CalendarOptionsModalContent extends Component {
     const {
       firstDayOfWeek,
       calendarWeekColumnHeader,
-      timeFormat
+      timeFormat,
+      enableColorImpairedMode
     } = props;
 
     this.state = {
       firstDayOfWeek,
       calendarWeekColumnHeader,
-      timeFormat
+      timeFormat,
+      enableColorImpairedMode
     };
   }
 
@@ -38,18 +40,21 @@ class CalendarOptionsModalContent extends Component {
     const {
       firstDayOfWeek,
       calendarWeekColumnHeader,
-      timeFormat
+      timeFormat,
+      enableColorImpairedMode
     } = this.props;
 
     if (
       prevProps.firstDayOfWeek !== firstDayOfWeek ||
       prevProps.calendarWeekColumnHeader !== calendarWeekColumnHeader ||
-      prevProps.timeFormat !== timeFormat
+      prevProps.timeFormat !== timeFormat ||
+      prevProps.enableColorImpairedMode !== enableColorImpairedMode
     ) {
       this.setState({
         firstDayOfWeek,
         calendarWeekColumnHeader,
-        timeFormat
+        timeFormat,
+        enableColorImpairedMode
       });
     }
   }
@@ -96,7 +101,8 @@ class CalendarOptionsModalContent extends Component {
     const {
       firstDayOfWeek,
       calendarWeekColumnHeader,
-      timeFormat
+      timeFormat,
+      enableColorImpairedMode
     } = this.state;
 
     return (
@@ -195,7 +201,17 @@ class CalendarOptionsModalContent extends Component {
                   value={timeFormat}
                   onChange={this.onGlobalInputChange}
                 />
+              </FormGroup><FormGroup>
+                <FormLabel>Enable Color-Impaired Mode</FormLabel>
+
+                <FormInputGroup
+                  type={inputTypes.CHECK}
+                  name="enableColorImpairedMode"
+                  value={enableColorImpairedMode}
+                  onChange={this.onGlobalInputChange}
+                />
               </FormGroup>
+
             </Form>
           </FieldSet>
         </ModalBody>
@@ -218,6 +234,7 @@ CalendarOptionsModalContent.propTypes = {
   firstDayOfWeek: PropTypes.number.isRequired,
   calendarWeekColumnHeader: PropTypes.string.isRequired,
   timeFormat: PropTypes.string.isRequired,
+  enableColorImpairedMode: PropTypes.bool.isRequired,
   dispatchSetCalendarOption: PropTypes.func.isRequired,
   dispatchSaveUISettings: PropTypes.func.isRequired,
   onModalClose: PropTypes.func.isRequired

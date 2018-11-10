@@ -20,7 +20,8 @@ function createMapStateToProps() {
         queueItem,
         ...calendarOptions,
         timeFormat: uiSettings.timeFormat,
-        longDateFormat: uiSettings.longDateFormat
+        longDateFormat: uiSettings.longDateFormat,
+        colorImpairedMode: uiSettings.enableColorImpairedMode
       };
     }
   );

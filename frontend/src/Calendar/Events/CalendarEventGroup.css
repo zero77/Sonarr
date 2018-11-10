@@ -40,14 +40,6 @@
   margin-bottom: 5px;
 }
 
-.events {
-  margin-top: 3px;
-  margin-right: 3px;
-  border-top: 1px dashed $disabledColor;
-  border-right: 1px dashed $disabledColor;
-  border-bottom: 1px dashed $disabledColor;
-}
-
 .statusIcon {
   margin-left: 3px;
 }

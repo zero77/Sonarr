@@ -97,7 +97,7 @@ class CalendarEventGroup extends Component {
 
     if (isExpanded) {
       return (
-        <div className={styles.events}>
+        <div>
           {
             events.map((event) => {
               if (event.isGroup) {

@@ -5,7 +5,13 @@ import LegendItem from './LegendItem';
 import LegendIconItem from './LegendIconItem';
 import styles from './Legend.css';
 
-function Legend({ colorImpairedMode }) {
+function Legend(props) {
+  const {
+    showFinaleIcon,
+    showCutoffUnmetIcon,
+    colorImpairedMode
+  } = props;
+
   return (
     <div className={styles.legend}>
       <div>
@@ -44,27 +50,45 @@ function Legend({ colorImpairedMode }) {
           tooltip="Series or season premiere"
         />
 
-        <LegendIconItem
-          name="Finale"
-          icon={icons.INFO}
-          kind={kinds.WARNING}
-          tooltip="Series or season finale"
-        />
+        {
+          showFinaleIcon &&
+            <LegendIconItem
+              name="Finale"
+              icon={icons.INFO}
+              kind={kinds.WARNING}
+              tooltip="Series or season finale"
+            />
+        }
+
+        {
+          !showFinaleIcon && showCutoffUnmetIcon &&
+            <LegendIconItem
+              name="Cutoff Not Met"
+              icon={icons.EPISODE_FILE}
+              kind={kinds.WARNING}
+              tooltip="Quality or language cutoff has not been met"
+            />
+        }
       </div>
 
-      <div>
-        <LegendIconItem
-          name="Cutoff Not Met"
-          icon={icons.EPISODE_FILE}
-          kind={kinds.WARNING}
-          tooltip="Quality or language cutoff has not been met"
-        />
-      </div>
+      {
+        showFinaleIcon && showCutoffUnmetIcon &&
+          <div>
+            <LegendIconItem
+              name="Cutoff Not Met"
+              icon={icons.EPISODE_FILE}
+              kind={kinds.WARNING}
+              tooltip="Quality or language cutoff has not been met"
+            />
+          </div>
+      }
     </div>
   );
 }
 
 Legend.propTypes = {
+  showFinaleIcon: PropTypes.bool.isRequired,
+  showCutoffUnmetIcon: PropTypes.bool.isRequired,
   colorImpairedMode: PropTypes.bool.isRequired
 };
 

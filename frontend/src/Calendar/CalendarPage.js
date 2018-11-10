@@ -66,6 +66,8 @@ class CalendarPage extends Component {
       selectedFilterKey,
       filters,
       hasSeries,
+      showFinaleIcon,
+      showCutoffUnmetIcon,
       colorImpairedMode,
       onFilterSelect
     } = this.props;
@@ -124,7 +126,11 @@ class CalendarPage extends Component {
 
           {
             hasSeries &&
-            <Legend colorImpairedMode={colorImpairedMode} />
+              <Legend
+                showFinaleIcon={showFinaleIcon}
+                showCutoffUnmetIcon={showCutoffUnmetIcon}
+                colorImpairedMode={colorImpairedMode}
+              />
           }
         </PageContentBodyConnector>
 
@@ -146,6 +152,8 @@ CalendarPage.propTypes = {
   selectedFilterKey: PropTypes.string.isRequired,
   filters: PropTypes.arrayOf(PropTypes.object).isRequired,
   hasSeries: PropTypes.bool.isRequired,
+  showFinaleIcon: PropTypes.bool.isRequired,
+  showCutoffUnmetIcon: PropTypes.bool.isRequired,
   colorImpairedMode: PropTypes.bool.isRequired,
   onDaysCountChange: PropTypes.func.isRequired,
   onFilterSelect: PropTypes.func.isRequired

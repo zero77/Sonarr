@@ -6,7 +6,7 @@ import formatTime from 'Utilities/Date/formatTime';
 import padNumber from 'Utilities/Number/padNumber';
 import { icons, kinds } from 'Helpers/Props';
 import Icon from 'Components/Icon';
-import IconButton from 'Components/Link/IconButton';
+import Link from 'Components/Link/Link';
 import getStatusStyle from 'Calendar/getStatusStyle';
 import CalendarEventConnector from 'Calendar/Events/CalendarEventConnector';
 import styles from './CalendarEventGroup.css';
@@ -115,12 +115,15 @@ class CalendarEventGroup extends Component {
             })
           }
 
-          <div className={styles.collapseContainer}>
-            <IconButton
+          <Link
+            className={styles.collapseContainer}
+            component="div"
+            onPress={this.onExpandPress}
+          >
+            <Icon
               name={icons.COLLAPSE}
-              onPress={this.onExpandPress}
             />
-          </div>
+          </Link>
         </div>
       );
     }
@@ -186,8 +189,8 @@ class CalendarEventGroup extends Component {
           </div>
 
           {
-            showEpisodeInformation &&
-              <div>
+            showEpisodeInformation ?
+              <div className={styles.episodeInfo}>
                 {seasonNumber}x{padNumber(firstEpisode.episodeNumber, 2)}-{padNumber(lastEpisode.episodeNumber, 2)}
 
                 {
@@ -198,16 +201,31 @@ class CalendarEventGroup extends Component {
                       ({firstEpisode.absoluteEpisodeNumber}-{lastEpisode.absoluteEpisodeNumber})
                     </span>
                 }
-              </div>
+              </div> :
+              <Link
+                className={styles.expandContainerInline}
+                component="div"
+                onPress={this.onExpandPress}
+              >
+                <Icon
+                  name={icons.EXPAND}
+                />
+              </Link>
           }
         </div>
 
-        <div className={styles.expandContainer}>
-          <IconButton
-            name={icons.EXPAND}
-            onPress={this.onExpandPress}
-          />
-        </div>
+        {
+          showEpisodeInformation &&
+            <Link
+              className={styles.expandContainer}
+              component="div"
+              onPress={this.onExpandPress}
+            >
+              <Icon
+                name={icons.EXPAND}
+              />
+            </Link>
+        }
       </div>
     );
   }

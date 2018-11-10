@@ -23,11 +23,20 @@
 
 .airTime {
   flex: 1 0 1px;
-  margin-right: 10px;
+}
+
+.episodeInfo {
+  margin-left: 10px;
 }
 
 .absoluteEpisodeNumber {
   margin-left: 3px;
+}
+
+.expandContainerInline {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1 0 20px;
 }
 
 .expandContainer,

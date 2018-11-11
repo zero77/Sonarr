@@ -13,6 +13,13 @@ import createHandleActions from './Creators/createHandleActions';
 import { updateItem } from './baseActions';
 
 //
+// Local
+
+const MONITOR_TIMEOUT = 1000;
+const seasonsToUpdate = {};
+let seasonMonitorToggleTimeout = null;
+
+//
 // Variables
 
 export const section = 'series';
@@ -264,15 +271,19 @@ export const actionHandlers = handleThunks({
   },
 
   [TOGGLE_SEASON_MONITORED]: function(getState, payload, dispatch) {
+    if (seasonMonitorToggleTimeout) {
+      seasonMonitorToggleTimeout = clearTimeout(seasonMonitorToggleTimeout);
+    }
+
     const {
       seriesId: id,
       seasonNumber,
       monitored
     } = payload;
 
-    const series = _.find(getState().series.items, { id });
+    const series = getState().series.items.find((s) => s.id === id);
     const seasons = _.cloneDeep(series.seasons);
-    const season = _.find(seasons, { seasonNumber });
+    const season = seasons.find((s) => s.seasonNumber === seasonNumber);
 
     season.isSaving = true;
 
@@ -282,45 +293,78 @@ export const actionHandlers = handleThunks({
       seasons
     }));
 
+    seasonsToUpdate[seasonNumber] = monitored;
     season.monitored = monitored;
 
-    const promise = $.ajax({
-      url: `/series/${id}`,
-      method: 'PUT',
-      data: JSON.stringify({
-        ...series,
-        seasons
-      }),
-      dataType: 'json'
-    });
-
-    promise.done((data) => {
-      const episodes = _.filter(getState().episodes.items, { seriesId: id, seasonNumber });
-
-      dispatch(batchActions([
-        updateItem({
-          id,
-          section,
-          ...data
+    seasonMonitorToggleTimeout = setTimeout(() => {
+      $.ajax({
+        url: `/series/${id}`,
+        method: 'PUT',
+        data: JSON.stringify({
+          ...series,
+          seasons
         }),
+        dataType: 'json'
+      }).then(
+        (data) => {
+          const changedSeasons = [];
 
-        ...episodes.map((episode) => {
-          return updateItem({
-            id: episode.id,
-            section: 'episodes',
-            monitored
+          data.seasons.forEach((s) => {
+            if (seasonsToUpdate.hasOwnProperty(s.seasonNumber)) {
+              if (s.monitored === seasonsToUpdate[s.seasonNumber]) {
+                changedSeasons.push(s);
+              } else {
+                s.isSaving = true;
+              }
+            }
           });
-        })
-      ]));
-    });
 
-    promise.fail((xhr) => {
-      dispatch(updateItem({
-        id,
-        section,
-        seasons: series.seasons
-      }));
-    });
+          const episodesToUpdate = getState().episodes.items.reduce((acc, episode) => {
+            if (episode.seriesId !== data.id) {
+              return acc;
+            }
+
+            const changedSeason = changedSeasons.find((s) => s.seasonNumber === episode.seasonNumber);
+
+            if (!changedSeason) {
+              return acc;
+            }
+
+            acc.push(updateItem({
+              id: episode.id,
+              section: 'episodes',
+              monitored: changedSeason.monitored
+            }));
+
+            return acc;
+          }, []);
+
+          dispatch(batchActions([
+            updateItem({
+              id,
+              section,
+              ...data
+            }),
+
+            ...episodesToUpdate
+          ]));
+
+          changedSeasons.forEach((s) => {
+            delete seasonsToUpdate[s.seasonNumber];
+          });
+        },
+        (xhr) => {
+          dispatch(updateItem({
+            id,
+            section,
+            seasons: series.seasons
+          }));
+
+          Object.keys(seasonsToUpdate).forEach((s) => {
+            delete seasonsToUpdate[s];
+          });
+        });
+    }, MONITOR_TIMEOUT);
   }
 
 });

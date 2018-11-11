@@ -14,8 +14,6 @@ function createMapStateToProps() {
       return {
         selectedFilterKey: calendar.selectedFilterKey,
         filters: calendar.filters,
-        showFinaleIcon: calendar.options.showFinaleIcon,
-        showCutoffUnmetIcon: calendar.options.showCutoffUnmetIcon,
         colorImpairedMode: uiSettings.enableColorImpairedMode,
         hasSeries: !!seriesCount
       };

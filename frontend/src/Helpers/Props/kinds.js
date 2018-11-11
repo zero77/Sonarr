@@ -3,6 +3,7 @@ export const DEFAULT = 'default';
 export const DISABLED = 'disabled';
 export const INFO = 'info';
 export const INVERSE = 'inverse';
+export const PINK = 'pink';
 export const PRIMARY = 'primary';
 export const PURPLE = 'purple';
 export const SUCCESS = 'success';
@@ -14,6 +15,7 @@ export const all = [
   DISABLED,
   INFO,
   INVERSE,
+  PINK,
   PRIMARY,
   PURPLE,
   SUCCESS,

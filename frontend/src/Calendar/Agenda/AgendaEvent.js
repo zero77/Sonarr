@@ -56,6 +56,7 @@ class AgendaEvent extends Component {
       showDate,
       showEpisodeInformation,
       showFinaleIcon,
+      showSpecialIcon,
       showCutoffUnmetIcon,
       timeFormat,
       longDateFormat,
@@ -198,6 +199,17 @@ class AgendaEvent extends Component {
                   title={series.status === 'ended' ? 'Series finale' : 'Season finale'}
                 />
             }
+
+            {
+              showSpecialIcon &&
+              (episodeNumber === 0 || seasonNumber === 0) &&
+                <Icon
+                  className={styles.statusIcon}
+                  name={icons.INFO}
+                  kind={kinds.PINK}
+                  title="Special"
+                />
+            }
           </div>
         </Link>
 
@@ -231,6 +243,7 @@ AgendaEvent.propTypes = {
   showDate: PropTypes.bool.isRequired,
   showEpisodeInformation: PropTypes.bool.isRequired,
   showFinaleIcon: PropTypes.bool.isRequired,
+  showSpecialIcon: PropTypes.bool.isRequired,
   showCutoffUnmetIcon: PropTypes.bool.isRequired,
   timeFormat: PropTypes.string.isRequired,
   longDateFormat: PropTypes.string.isRequired,

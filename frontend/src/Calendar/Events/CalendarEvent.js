@@ -60,6 +60,7 @@ class CalendarEvent extends Component {
       queueItem,
       showEpisodeInformation,
       showFinaleIcon,
+      showSpecialIcon,
       showCutoffUnmetIcon,
       timeFormat,
       colorImpairedMode
@@ -168,6 +169,17 @@ class CalendarEvent extends Component {
                   title={series.status === 'ended' ? 'Series finale' : 'Season finale'}
                 />
             }
+
+            {
+              showSpecialIcon &&
+              (episodeNumber === 0 || seasonNumber === 0) &&
+                <Icon
+                  className={styles.statusIcon}
+                  name={icons.INFO}
+                  kind={kinds.PINK}
+                  title="Special"
+                />
+            }
           </div>
 
           {
@@ -222,6 +234,7 @@ CalendarEvent.propTypes = {
   queueItem: PropTypes.object,
   showEpisodeInformation: PropTypes.bool.isRequired,
   showFinaleIcon: PropTypes.bool.isRequired,
+  showSpecialIcon: PropTypes.bool.isRequired,
   showCutoffUnmetIcon: PropTypes.bool.isRequired,
   timeFormat: PropTypes.string.isRequired,
   colorImpairedMode: PropTypes.bool.isRequired,

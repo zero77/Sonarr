@@ -14,6 +14,10 @@
   color: $infoColor;
 }
 
+.pink {
+  color: $pink;
+}
+
 .success {
   color: $successColor;
 }

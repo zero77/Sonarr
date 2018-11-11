@@ -39,6 +39,7 @@ export const defaultState = {
     collapseMultipleEpisodes: false,
     showEpisodeInformation: true,
     showFinaleIcon: false,
+    showSpecialIcon: false,
     showCutoffUnmetIcon: false
   },
 

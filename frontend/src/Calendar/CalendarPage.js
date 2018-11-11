@@ -11,7 +11,7 @@ import FilterMenu from 'Components/Menu/FilterMenu';
 import NoSeries from 'Series/NoSeries';
 import CalendarLinkModal from './iCal/CalendarLinkModal';
 import CalendarOptionsModal from './Options/CalendarOptionsModal';
-import Legend from './Legend/Legend';
+import LegendConnector from './Legend/LegendConnector';
 import CalendarConnector from './CalendarConnector';
 import styles from './CalendarPage.css';
 
@@ -66,9 +66,6 @@ class CalendarPage extends Component {
       selectedFilterKey,
       filters,
       hasSeries,
-      showFinaleIcon,
-      showCutoffUnmetIcon,
-      colorImpairedMode,
       onFilterSelect
     } = this.props;
 
@@ -126,11 +123,7 @@ class CalendarPage extends Component {
 
           {
             hasSeries &&
-              <Legend
-                showFinaleIcon={showFinaleIcon}
-                showCutoffUnmetIcon={showCutoffUnmetIcon}
-                colorImpairedMode={colorImpairedMode}
-              />
+              <LegendConnector />
           }
         </PageContentBodyConnector>
 
@@ -152,9 +145,6 @@ CalendarPage.propTypes = {
   selectedFilterKey: PropTypes.string.isRequired,
   filters: PropTypes.arrayOf(PropTypes.object).isRequired,
   hasSeries: PropTypes.bool.isRequired,
-  showFinaleIcon: PropTypes.bool.isRequired,
-  showCutoffUnmetIcon: PropTypes.bool.isRequired,
-  colorImpairedMode: PropTypes.bool.isRequired,
   onDaysCountChange: PropTypes.func.isRequired,
   onFilterSelect: PropTypes.func.isRequired
 };

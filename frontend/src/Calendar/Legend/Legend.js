@@ -8,9 +8,44 @@ import styles from './Legend.css';
 function Legend(props) {
   const {
     showFinaleIcon,
+    showSpecialIcon,
     showCutoffUnmetIcon,
     colorImpairedMode
   } = props;
+
+  const iconsToShow = [];
+  if (showFinaleIcon) {
+    iconsToShow.push(
+      <LegendIconItem
+        name="Finale"
+        icon={icons.INFO}
+        kind={kinds.WARNING}
+        tooltip="Series or season finale"
+      />
+    );
+  }
+
+  if (showSpecialIcon) {
+    iconsToShow.push(
+      <LegendIconItem
+        name="Special"
+        icon={icons.INFO}
+        kind={kinds.PINK}
+        tooltip="Special episode"
+      />
+    );
+  }
+
+  if (showCutoffUnmetIcon) {
+    iconsToShow.push(
+      <LegendIconItem
+        name="Cutoff Not Met"
+        icon={icons.EPISODE_FILE}
+        kind={kinds.WARNING}
+        tooltip="Quality or language cutoff has not been met"
+      />
+    );
+  }
 
   return (
     <div className={styles.legend}>
@@ -50,36 +85,14 @@ function Legend(props) {
           tooltip="Series or season premiere"
         />
 
-        {
-          showFinaleIcon &&
-            <LegendIconItem
-              name="Finale"
-              icon={icons.INFO}
-              kind={kinds.WARNING}
-              tooltip="Series or season finale"
-            />
-        }
-
-        {
-          !showFinaleIcon && showCutoffUnmetIcon &&
-            <LegendIconItem
-              name="Cutoff Not Met"
-              icon={icons.EPISODE_FILE}
-              kind={kinds.WARNING}
-              tooltip="Quality or language cutoff has not been met"
-            />
-        }
+        {iconsToShow[0]}
       </div>
 
       {
-        showFinaleIcon && showCutoffUnmetIcon &&
+        iconsToShow.length > 1 &&
           <div>
-            <LegendIconItem
-              name="Cutoff Not Met"
-              icon={icons.EPISODE_FILE}
-              kind={kinds.WARNING}
-              tooltip="Quality or language cutoff has not been met"
-            />
+            {iconsToShow[1]}
+            {iconsToShow[2]}
           </div>
       }
     </div>
@@ -88,6 +101,7 @@ function Legend(props) {
 
 Legend.propTypes = {
   showFinaleIcon: PropTypes.bool.isRequired,
+  showSpecialIcon: PropTypes.bool.isRequired,
   showCutoffUnmetIcon: PropTypes.bool.isRequired,
   colorImpairedMode: PropTypes.bool.isRequired
 };

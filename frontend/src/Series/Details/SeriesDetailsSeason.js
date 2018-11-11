@@ -94,8 +94,24 @@ class SeriesDetailsSeason extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.seriesId !== this.props.seriesId) {
+    const {
+      seriesId,
+      items
+    } = this.props;
+
+    if (prevProps.seriesId !== seriesId) {
       this._expandByDefault();
+      return;
+    }
+
+    if (
+      getSeasonStatistics(prevProps.items).episodeFileCount > 0 &&
+      getSeasonStatistics(items).episodeFileCount === 0
+    ) {
+      this.setState({
+        isOrganizeModalOpen: false,
+        isManageEpisodesOpen: false
+      });
     }
   }
 
@@ -316,7 +332,10 @@ class SeriesDetailsSeason extends Component {
                     Interactive Search
                   </MenuItem>
 
-                  <MenuItem onPress={this.onOrganizePress}>
+                  <MenuItem
+                    onPress={this.onOrganizePress}
+                    isDisabled={!episodeFileCount}
+                  >
                     <Icon
                       className={styles.actionMenuIcon}
                       name={icons.ORGANIZE}
@@ -325,7 +344,10 @@ class SeriesDetailsSeason extends Component {
                     Preview Rename
                   </MenuItem>
 
-                  <MenuItem onPress={this.onManageEpisodesPress}>
+                  <MenuItem
+                    onPress={this.onManageEpisodesPress}
+                    isDisabled={!episodeFileCount}
+                  >
                     <Icon
                       className={styles.actionMenuIcon}
                       name={icons.EPISODE_FILE}
@@ -369,6 +391,7 @@ class SeriesDetailsSeason extends Component {
                   name={icons.ORGANIZE}
                   title="Preview rename for this season"
                   size={24}
+                  isDisabled={!episodeFileCount}
                   onPress={this.onOrganizePress}
                 />
 
@@ -377,6 +400,7 @@ class SeriesDetailsSeason extends Component {
                   name={icons.EPISODE_FILE}
                   title="Manage episode files in this series"
                   size={24}
+                  isDisabled={!episodeFileCount}
                   onPress={this.onManageEpisodesPress}
                 />
 

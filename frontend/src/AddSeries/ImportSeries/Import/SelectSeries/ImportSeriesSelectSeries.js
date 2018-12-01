@@ -120,7 +120,7 @@ class ImportSeriesSelectSeries extends Component {
       isPopulated,
       error,
       items,
-      queued,
+      isQueued,
       isLookingUpSeries
     } = this.props;
 
@@ -142,7 +142,7 @@ class ImportSeriesSelectSeries extends Component {
           onPress={this.onPress}
         >
           {
-            isLookingUpSeries && queued && !isPopulated &&
+            isLookingUpSeries && isQueued && !isPopulated &&
               <LoadingIndicator
                 className={styles.loading}
                 size={20}
@@ -170,7 +170,7 @@ class ImportSeriesSelectSeries extends Component {
 
           {
             isPopulated && !selectedSeries &&
-              <div>
+              <div className={styles.noMatches}>
                 <Icon
                   className={styles.warningIcon}
                   name={icons.WARNING}
@@ -264,7 +264,7 @@ ImportSeriesSelectSeries.propTypes = {
   isPopulated: PropTypes.bool.isRequired,
   error: PropTypes.object,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  queued: PropTypes.bool.isRequired,
+  isQueued: PropTypes.bool.isRequired,
   isLookingUpSeries: PropTypes.bool.isRequired,
   onSearchInputChange: PropTypes.func.isRequired,
   onSeriesSelect: PropTypes.func.isRequired
@@ -274,7 +274,7 @@ ImportSeriesSelectSeries.defaultProps = {
   isFetching: true,
   isPopulated: false,
   items: [],
-  queued: true
+  isQueued: true
 };
 
 export default ImportSeriesSelectSeries;

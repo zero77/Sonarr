@@ -36,6 +36,7 @@ export const defaultState = {
 export const QUEUE_LOOKUP_SERIES = 'importSeries/queueLookupSeries';
 export const START_LOOKUP_SERIES = 'importSeries/startLookupSeries';
 export const CANCEL_LOOKUP_SERIES = 'importSeries/cancelLookupSeries';
+export const LOOKUP_UNSEARCHED_SERIES = 'importSeries/lookupUnsearchedSeries';
 export const CLEAR_IMPORT_SERIES = 'importSeries/clearImportSeries';
 export const SET_IMPORT_SERIES_VALUE = 'importSeries/setImportSeriesValue';
 export const IMPORT_SERIES = 'importSeries/importSeries';
@@ -46,6 +47,7 @@ export const IMPORT_SERIES = 'importSeries/importSeries';
 export const queueLookupSeries = createThunk(QUEUE_LOOKUP_SERIES);
 export const startLookupSeries = createThunk(START_LOOKUP_SERIES);
 export const importSeries = createThunk(IMPORT_SERIES);
+export const lookupUnsearchedSeries = createThunk(LOOKUP_UNSEARCHED_SERIES);
 export const clearImportSeries = createAction(CLEAR_IMPORT_SERIES);
 export const cancelLookupSeries = createAction(CANCEL_LOOKUP_SERIES);
 
@@ -83,7 +85,7 @@ export const actionHandlers = handleThunks({
       section,
       ...item,
       term,
-      queued: true,
+      isQueued: true,
       items: []
     }));
 
@@ -155,7 +157,7 @@ export const actionHandlers = handleThunks({
         isPopulated: true,
         error: null,
         items: data,
-        queued: false,
+        isQueued: false,
         selectedSeries: queued.selectedSeries || data[0],
         updateOnly: true
       }));
@@ -168,7 +170,7 @@ export const actionHandlers = handleThunks({
         isFetching: false,
         isPopulated: false,
         error: xhr,
-        queued: false,
+        isQueued: false,
         updateOnly: true
       }));
     });
@@ -178,6 +180,29 @@ export const actionHandlers = handleThunks({
 
       dispatch(startLookupSeries());
     });
+  },
+
+  [LOOKUP_UNSEARCHED_SERIES]: function(getState, payload, dispatch) {
+    const state = getState().importSeries;
+
+    if (state.isLookingUpSeries) {
+      return;
+    }
+
+    state.items.forEach((item) => {
+      const id = item.id;
+
+      if (
+        !item.isPopulated &&
+        !queue.includes(id)
+      ) {
+        queue.push(item.id);
+      }
+    });
+
+    if (queue.length) {
+      dispatch(startLookupSeries({ start: true }));
+    }
   },
 
   [IMPORT_SERIES]: function(getState, payload, dispatch) {
@@ -251,7 +276,23 @@ export const actionHandlers = handleThunks({
 export const reducers = createHandleActions({
 
   [CANCEL_LOOKUP_SERIES]: function(state) {
-    return Object.assign({}, state, { isLookingUpSeries: false });
+    queue.splice(0, queue.length);
+
+    const items = state.items.map((item) => {
+      if (item.isQueued) {
+        return {
+          ...item,
+          isQueued: false
+        };
+      }
+
+      return item;
+    });
+
+    return Object.assign({}, state, {
+      isLookingUpSeries: false,
+      items
+    });
   },
 
   [CLEAR_IMPORT_SERIES]: function(state) {

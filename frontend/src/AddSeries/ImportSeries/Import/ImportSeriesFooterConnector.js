@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { cancelLookupSeries } from 'Store/Actions/importSeriesActions';
+import { lookupUnsearchedSeries, cancelLookupSeries } from 'Store/Actions/importSeriesActions';
 import ImportSeriesFooter from './ImportSeriesFooter';
 
 function isMixed(items, selectedIds, defaultValue, key) {
@@ -35,6 +35,7 @@ function createMapStateToProps() {
       const isLanguageProfileIdMixed = isMixed(items, selectedIds, defaultLanguageProfileId, 'languageProfileId');
       const isSeriesTypeMixed = isMixed(items, selectedIds, defaultSeriesType, 'seriesType');
       const isSeasonFolderMixed = isMixed(items, selectedIds, defaultSeasonFolder, 'seasonFolder');
+      const hasUnsearchedItems = !isLookingUpSeries && items.some((item) => !item.isPopulated);
 
       return {
         selectedCount: selectedIds.length,
@@ -49,13 +50,15 @@ function createMapStateToProps() {
         isQualityProfileIdMixed,
         isLanguageProfileIdMixed,
         isSeriesTypeMixed,
-        isSeasonFolderMixed
+        isSeasonFolderMixed,
+        hasUnsearchedItems
       };
     }
   );
 }
 
 const mapDispatchToProps = {
+  onLookupPress: lookupUnsearchedSeries,
   onCancelLookupPress: cancelLookupSeries
 };
 

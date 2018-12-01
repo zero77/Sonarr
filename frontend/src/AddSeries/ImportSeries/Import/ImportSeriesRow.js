@@ -107,7 +107,6 @@ ImportSeriesRow.propTypes = {
   selectedSeries: PropTypes.object,
   isExistingSeries: PropTypes.bool.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  queued: PropTypes.bool.isRequired,
   showLanguageProfile: PropTypes.bool.isRequired,
   isSelected: PropTypes.bool,
   onSelectedChange: PropTypes.func.isRequired,

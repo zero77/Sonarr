@@ -16,12 +16,15 @@ function ImportSeriesTitle(props) {
     <div className={styles.titleContainer}>
       <div className={styles.title}>
         {title}
-
-        {
-          !title.contains(year) &&
-            <span className={styles.year}>({year})</span>
-        }
       </div>
+
+      {
+        !title.contains(year) &&
+        year > 0 &&
+          <span className={styles.year}>
+            ({year})
+          </span>
+      }
 
       {
         !!network &&

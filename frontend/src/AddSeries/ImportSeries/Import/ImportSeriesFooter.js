@@ -116,8 +116,10 @@ class ImportSeriesFooter extends Component {
       isQualityProfileIdMixed,
       isLanguageProfileIdMixed,
       isSeriesTypeMixed,
+      hasUnsearchedItems,
       showLanguageProfile,
       onImportPress,
+      onLookupPress,
       onCancelLookupPress
     } = this.props;
 
@@ -235,6 +237,17 @@ class ImportSeriesFooter extends Component {
             }
 
             {
+              hasUnsearchedItems &&
+                <Button
+                  className={styles.loadingButton}
+                  kind={kinds.SUCCESS}
+                  onPress={onLookupPress}
+                >
+                  Start Processing
+                </Button>
+            }
+
+            {
               isLookingUpSeries &&
                 <LoadingIndicator
                   className={styles.loading}
@@ -267,9 +280,11 @@ ImportSeriesFooter.propTypes = {
   isLanguageProfileIdMixed: PropTypes.bool.isRequired,
   isSeriesTypeMixed: PropTypes.bool.isRequired,
   isSeasonFolderMixed: PropTypes.bool.isRequired,
+  hasUnsearchedItems: PropTypes.bool.isRequired,
   showLanguageProfile: PropTypes.bool.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onImportPress: PropTypes.func.isRequired,
+  onLookupPress: PropTypes.func.isRequired,
   onCancelLookupPress: PropTypes.func.isRequired
 };
 

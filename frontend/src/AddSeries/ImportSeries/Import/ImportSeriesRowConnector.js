@@ -34,7 +34,6 @@ function createMapStateToProps() {
 }
 
 const mapDispatchToProps = {
-  queueLookupSeries,
   setImportSeriesValue
 };
 
@@ -84,7 +83,6 @@ ImportSeriesRowConnector.propTypes = {
   seriesType: PropTypes.string,
   seasonFolder: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.object),
-  queueLookupSeries: PropTypes.func.isRequired,
   setImportSeriesValue: PropTypes.func.isRequired
 };
 

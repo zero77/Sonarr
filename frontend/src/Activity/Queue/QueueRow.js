@@ -135,21 +135,14 @@ class QueueRow extends Component {
             if (name === 'series.sortTitle') {
               return (
                 <TableRowCell key={name}>
-                  <SeriesTitleLink
-                    titleSlug={series.titleSlug}
-                    title={series.title}
-                  />
-                </TableRowCell>
-              );
-            }
-
-            if (name === 'series') {
-              return (
-                <TableRowCell key={name}>
-                  <SeriesTitleLink
-                    titleSlug={series.titleSlug}
-                    title={series.title}
-                  />
+                  {
+                    series ?
+                      <SeriesTitleLink
+                        titleSlug={series.titleSlug}
+                        title={series.title}
+                      /> :
+                      title
+                  }
                 </TableRowCell>
               );
             }
@@ -157,17 +150,21 @@ class QueueRow extends Component {
             if (name === 'episode') {
               return (
                 <TableRowCell key={name}>
-                  <SeasonEpisodeNumber
-                    seasonNumber={episode.seasonNumber}
-                    episodeNumber={episode.episodeNumber}
-                    absoluteEpisodeNumber={episode.absoluteEpisodeNumber}
-                    seriesType={series.seriesType}
-                    alternateTitles={series.alternateTitles}
-                    sceneSeasonNumber={episode.sceneSeasonNumber}
-                    sceneEpisodeNumber={episode.sceneEpisodeNumber}
-                    sceneAbsoluteEpisodeNumber={episode.sceneAbsoluteEpisodeNumber}
-                    unverifiedSceneNumbering={episode.unverifiedSceneNumbering}
-                  />
+                  {
+                    episode ?
+                      <SeasonEpisodeNumber
+                        seasonNumber={episode.seasonNumber}
+                        episodeNumber={episode.episodeNumber}
+                        absoluteEpisodeNumber={episode.absoluteEpisodeNumber}
+                        seriesType={series.seriesType}
+                        alternateTitles={series.alternateTitles}
+                        sceneSeasonNumber={episode.sceneSeasonNumber}
+                        sceneEpisodeNumber={episode.sceneEpisodeNumber}
+                        sceneAbsoluteEpisodeNumber={episode.sceneAbsoluteEpisodeNumber}
+                        unverifiedSceneNumbering={episode.unverifiedSceneNumbering}
+                      /> :
+                      '-'
+                  }
                 </TableRowCell>
               );
             }
@@ -175,23 +172,35 @@ class QueueRow extends Component {
             if (name === 'episode.title') {
               return (
                 <TableRowCell key={name}>
-                  <EpisodeTitleLink
-                    episodeId={episode.id}
-                    seriesId={series.id}
-                    episodeFileId={episode.episodeFileId}
-                    episodeTitle={episode.title}
-                    showOpenSeriesButton={true}
-                  />
+                  {
+                    episode ?
+                      <EpisodeTitleLink
+                        episodeId={episode.id}
+                        seriesId={series.id}
+                        episodeFileId={episode.episodeFileId}
+                        episodeTitle={episode.title}
+                        showOpenSeriesButton={true}
+                      /> :
+                      '-'
+                  }
                 </TableRowCell>
               );
             }
 
             if (name === 'episode.airDateUtc') {
+              if (episode) {
+                return (
+                  <RelativeDateCellConnector
+                    key={name}
+                    date={episode.airDateUtc}
+                  />
+                );
+              }
+
               return (
-                <RelativeDateCellConnector
-                  key={name}
-                  date={episode.airDateUtc}
-                />
+                <TableRowCell key={name}>
+                  -
+                </TableRowCell>
               );
             }
 
@@ -329,8 +338,8 @@ QueueRow.propTypes = {
   trackedDownloadStatus: PropTypes.string,
   statusMessages: PropTypes.arrayOf(PropTypes.object),
   errorMessage: PropTypes.string,
-  series: PropTypes.object.isRequired,
-  episode: PropTypes.object.isRequired,
+  series: PropTypes.object,
+  episode: PropTypes.object,
   quality: PropTypes.object.isRequired,
   protocol: PropTypes.string.isRequired,
   indexer: PropTypes.string,

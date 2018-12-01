@@ -24,6 +24,10 @@ const paged = `${section}.paged`;
 // State
 
 export const defaultState = {
+  options: {
+    includeUnknownSeriesItems: false
+  },
+
   status: {
     isFetching: false,
     isPopulated: false,
@@ -127,11 +131,19 @@ export const defaultState = {
 };
 
 export const persistState = [
+  'queue.options',
   'queue.paged.pageSize',
   'queue.paged.sortKey',
   'queue.paged.sortDirection',
   'queue.paged.columns'
 ];
+
+//
+// Helpers
+
+function fetchDataAugmenter(getState, payload, data) {
+  data.includeUnknownSeriesItems = getState().queue.options.includeUnknownSeriesItems;
+}
 
 //
 // Actions Types
@@ -149,6 +161,7 @@ export const GOTO_LAST_QUEUE_PAGE = 'queue/gotoQueueLastPage';
 export const GOTO_QUEUE_PAGE = 'queue/gotoQueuePage';
 export const SET_QUEUE_SORT = 'queue/setQueueSort';
 export const SET_QUEUE_TABLE_OPTION = 'queue/setQueueTableOption';
+export const SET_QUEUE_OPTION = 'queue/setQueueOption';
 export const CLEAR_QUEUE = 'queue/clearQueue';
 
 export const GRAB_QUEUE_ITEM = 'queue/grabQueueItem';
@@ -172,6 +185,7 @@ export const gotoQueueLastPage = createThunk(GOTO_LAST_QUEUE_PAGE);
 export const gotoQueuePage = createThunk(GOTO_QUEUE_PAGE);
 export const setQueueSort = createThunk(SET_QUEUE_SORT);
 export const setQueueTableOption = createAction(SET_QUEUE_TABLE_OPTION);
+export const setQueueOption = createAction(SET_QUEUE_OPTION);
 export const clearQueue = createAction(CLEAR_QUEUE);
 
 export const grabQueueItem = createThunk(GRAB_QUEUE_ITEM);
@@ -222,7 +236,9 @@ export const actionHandlers = handleThunks({
       [serverSideCollectionHandlers.LAST_PAGE]: GOTO_LAST_QUEUE_PAGE,
       [serverSideCollectionHandlers.EXACT_PAGE]: GOTO_QUEUE_PAGE,
       [serverSideCollectionHandlers.SORT]: SET_QUEUE_SORT
-    }),
+    },
+    fetchDataAugmenter
+  ),
 
   [GRAB_QUEUE_ITEM]: function(getState, payload, dispatch) {
     const id = payload.id;
@@ -396,6 +412,18 @@ export const reducers = createHandleActions({
   [CLEAR_QUEUE_DETAILS]: createClearReducer(details, defaultState.details),
 
   [SET_QUEUE_TABLE_OPTION]: createSetTableOptionReducer(paged),
+
+  [SET_QUEUE_OPTION]: function(state, { payload }) {
+    const queueOptions = state.options;
+
+    return {
+      ...state,
+      options: {
+        ...queueOptions,
+        ...payload
+      }
+    };
+  },
 
   [CLEAR_QUEUE]: createClearReducer(paged, {
     isFetching: false,

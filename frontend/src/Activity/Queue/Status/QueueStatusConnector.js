@@ -9,12 +9,19 @@ function createMapStateToProps() {
   return createSelector(
     (state) => state.app,
     (state) => state.queue.status,
-    (app, status) => {
+    (state) => state.queue.options.includeUnknownSeriesItems,
+    (app, status, includeUnknownSeriesItems) => {
+      const {
+        count,
+        unknownCount
+      } = status.item;
+
       return {
         isConnected: app.isConnected,
         isReconnecting: app.isReconnecting,
         isPopulated: status.isPopulated,
-        ...status.item
+        ...status.item,
+        count: includeUnknownSeriesItems ? count : count - unknownCount
       };
     }
   );

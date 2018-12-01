@@ -17,6 +17,7 @@ import PageToolbarSection from 'Components/Page/Toolbar/PageToolbarSection';
 import PageToolbarButton from 'Components/Page/Toolbar/PageToolbarButton';
 import PageToolbarSeparator from 'Components/Page/Toolbar/PageToolbarSeparator';
 import RemoveQueueItemsModal from './RemoveQueueItemsModal';
+import QueueOptionsConnector from './QueueOptionsConnector';
 import QueueRowConnector from './QueueRowConnector';
 
 class Queue extends Component {
@@ -203,6 +204,7 @@ class Queue extends Component {
                   allSelected={allSelected}
                   allUnselected={allUnselected}
                   {...otherProps}
+                  optionsComponent={QueueOptionsConnector}
                   onSelectAllChange={this.onSelectAllChange}
                 >
                   <TableBody>

@@ -15,14 +15,16 @@ import Queue from './Queue';
 function createMapStateToProps() {
   return createSelector(
     (state) => state.episodes,
+    (state) => state.queue.options,
     (state) => state.queue.paged,
     createCommandExecutingSelector(commandNames.CHECK_FOR_FINISHED_DOWNLOAD),
-    (episodes, queue, isCheckForFinishedDownloadExecuting) => {
+    (episodes, options, queue, isCheckForFinishedDownloadExecuting) => {
       return {
         isEpisodesFetching: episodes.isFetching,
         isEpisodesPopulated: episodes.isPopulated,
         episodesError: episodes.error,
         isCheckForFinishedDownloadExecuting,
+        ...options,
         ...queue
       };
     }
@@ -55,6 +57,13 @@ class QueueConnector extends Component {
       } else {
         this.props.clearEpisodes();
       }
+    }
+
+    if (
+      this.props.includeUnknownSeriesItems !==
+      prevProps.includeUnknownSeriesItems
+    ) {
+      this.repopulate();
     }
   }
 

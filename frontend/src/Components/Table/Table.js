@@ -57,6 +57,7 @@ class Table extends Component {
       className,
       selectAll,
       columns,
+      optionsComponent,
       pageSize,
       canModifyColumns,
       children,
@@ -123,6 +124,7 @@ class Table extends Component {
                 <TableOptionsModal
                   isOpen={this.state.isTableOptionsModalOpen}
                   columns={columns}
+                  optionsComponent={optionsComponent}
                   pageSize={pageSize}
                   canModifyColumns={canModifyColumns}
                   onTableOptionChange={onTableOptionChange}
@@ -142,6 +144,7 @@ Table.propTypes = {
   className: PropTypes.string,
   selectAll: PropTypes.bool.isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  optionsComponent: PropTypes.func,
   pageSize: PropTypes.number,
   canModifyColumns: PropTypes.bool,
   children: PropTypes.node,

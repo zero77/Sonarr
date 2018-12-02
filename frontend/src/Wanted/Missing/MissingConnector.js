@@ -5,6 +5,7 @@ import { createSelector } from 'reselect';
 import { registerPagePopulator, unregisterPagePopulator } from 'Utilities/pagePopulator';
 import hasDifferentItems from 'Utilities/Object/hasDifferentItems';
 import selectUniqueIds from 'Utilities/Object/selectUniqueIds';
+import withCurrentPage from 'Components/withCurrentPage';
 import createCommandExecutingSelector from 'Store/Selectors/createCommandExecutingSelector';
 import * as wantedActions from 'Store/Actions/wantedActions';
 import { executeCommand } from 'Store/Actions/commandActions';
@@ -39,8 +40,19 @@ class MissingConnector extends Component {
   // Lifecycle
 
   componentDidMount() {
+    const {
+      useCurrentPage,
+      fetchMissing,
+      gotoMissingFirstPage
+    } = this.props;
+
     registerPagePopulator(this.repopulate, ['episodeFileUpdated']);
-    this.props.gotoMissingFirstPage();
+
+    if (useCurrentPage) {
+      fetchMissing();
+    } else {
+      gotoMissingFirstPage();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -138,6 +150,7 @@ class MissingConnector extends Component {
 }
 
 MissingConnector.propTypes = {
+  useCurrentPage: PropTypes.bool.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetchMissing: PropTypes.func.isRequired,
   gotoMissingFirstPage: PropTypes.func.isRequired,
@@ -154,4 +167,6 @@ MissingConnector.propTypes = {
   clearQueueDetails: PropTypes.func.isRequired
 };
 
-export default connect(createMapStateToProps, mapDispatchToProps)(MissingConnector);
+export default withCurrentPage(
+  connect(createMapStateToProps, mapDispatchToProps)(MissingConnector)
+);

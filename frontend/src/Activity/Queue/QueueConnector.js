@@ -5,6 +5,7 @@ import { createSelector } from 'reselect';
 import { registerPagePopulator, unregisterPagePopulator } from 'Utilities/pagePopulator';
 import hasDifferentItems from 'Utilities/Object/hasDifferentItems';
 import selectUniqueIds from 'Utilities/Object/selectUniqueIds';
+import withCurrentPage from 'Components/withCurrentPage';
 import createCommandExecutingSelector from 'Store/Selectors/createCommandExecutingSelector';
 import { executeCommand } from 'Store/Actions/commandActions';
 import * as queueActions from 'Store/Actions/queueActions';
@@ -44,8 +45,19 @@ class QueueConnector extends Component {
   // Lifecycle
 
   componentDidMount() {
+    const {
+      useCurrentPage,
+      fetchQueue,
+      gotoQueueFirstPage
+    } = this.props;
+
     registerPagePopulator(this.repopulate);
-    this.props.gotoQueueFirstPage();
+
+    if (useCurrentPage) {
+      fetchQueue();
+    } else {
+      gotoQueueFirstPage();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -169,4 +181,6 @@ QueueConnector.propTypes = {
   executeCommand: PropTypes.func.isRequired
 };
 
-export default connect(createMapStateToProps, mapDispatchToProps)(QueueConnector);
+export default withCurrentPage(
+  connect(createMapStateToProps, mapDispatchToProps)(QueueConnector)
+);

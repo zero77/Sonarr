@@ -7,6 +7,7 @@ import { filterTypes } from 'Helpers/Props';
 import { createThunk, handleThunks } from 'Store/thunks';
 import * as calendarViews from 'Calendar/calendarViews';
 import * as commandNames from 'Commands/commandNames';
+import createClearReducer from './Creators/Reducers/createClearReducer';
 import createHandleActions from './Creators/createHandleActions';
 import { set, update } from './baseActions';
 import { executeCommandHelper } from './commandActions';
@@ -210,11 +211,12 @@ export const searchMissing = createThunk(SEARCH_MISSING);
 export const actionHandlers = handleThunks({
   [FETCH_CALENDAR]: function(getState, payload, dispatch) {
     const state = getState();
-    const unmonitored = state.calendar.selectedFilterKey === 'all';
+    const calendar = state.calendar;
+    const unmonitored = calendar.selectedFilterKey === 'all';
 
     const {
-      time,
-      view
+      time = calendar.time,
+      view = calendar.view
     } = payload;
 
     const dayCount = state.calendar.dayCount;
@@ -367,16 +369,12 @@ export const actionHandlers = handleThunks({
 
 export const reducers = createHandleActions({
 
-  [CLEAR_CALENDAR]: (state) => {
-    const {
-      view,
-      selectedFilterKey,
-      options,
-      ...otherDefaultState
-    } = defaultState;
-
-    return Object.assign({}, state, otherDefaultState);
-  },
+  [CLEAR_CALENDAR]: createClearReducer(section, {
+    isFetching: false,
+    isPopulated: false,
+    error: null,
+    items: []
+  }),
 
   [SET_CALENDAR_OPTION]: function(state, { payload }) {
     const options = state.options;

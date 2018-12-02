@@ -77,6 +77,7 @@ class CalendarPage extends Component {
       hasSeries,
       missingEpisodeIds,
       isSearchingForMissing,
+      useCurrentPage,
       onFilterSelect
     } = this.props;
 
@@ -86,11 +87,7 @@ class CalendarPage extends Component {
     } = this.state;
 
     const isMeasured = this.state.width > 0;
-    let PageComponent = 'div';
-
-    if (isMeasured) {
-      PageComponent = hasSeries ? CalendarConnector : NoSeries;
-    }
+    const PageComponent = hasSeries ? CalendarConnector : NoSeries;
 
     return (
       <PageContent title="Calendar">
@@ -137,7 +134,13 @@ class CalendarPage extends Component {
             whitelist={['width']}
             onMeasure={this.onMeasure}
           >
-            <PageComponent />
+            {
+              isMeasured ?
+                <PageComponent
+                  useCurrentPage={useCurrentPage}
+                /> :
+                <div />
+            }
           </Measure>
 
           {
@@ -166,6 +169,7 @@ CalendarPage.propTypes = {
   hasSeries: PropTypes.bool.isRequired,
   missingEpisodeIds: PropTypes.arrayOf(PropTypes.number).isRequired,
   isSearchingForMissing: PropTypes.bool.isRequired,
+  useCurrentPage: PropTypes.bool.isRequired,
   onSearchMissingPress: PropTypes.func.isRequired,
   onDaysCountChange: PropTypes.func.isRequired,
   onFilterSelect: PropTypes.func.isRequired

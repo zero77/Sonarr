@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 import { isCommandExecuting } from 'Utilities/Command';
 import isBefore from 'Utilities/Date/isBefore';
+import withCurrentPage from 'Components/withCurrentPage';
 import { searchMissing, setCalendarDaysCount, setCalendarFilter } from 'Store/Actions/calendarActions';
 import createSeriesCountSelector from 'Store/Selectors/createSeriesCountSelector';
 import createUISettingsSelector from 'Store/Selectors/createUISettingsSelector';
@@ -95,4 +96,6 @@ function createMapDispatchToProps(dispatch, props) {
   };
 }
 
-export default connect(createMapStateToProps, createMapDispatchToProps)(CalendarPage);
+export default withCurrentPage(
+  connect(createMapStateToProps, createMapDispatchToProps)(CalendarPage)
+);

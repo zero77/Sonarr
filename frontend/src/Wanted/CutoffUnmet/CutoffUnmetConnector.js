@@ -5,6 +5,7 @@ import { createSelector } from 'reselect';
 import { registerPagePopulator, unregisterPagePopulator } from 'Utilities/pagePopulator';
 import hasDifferentItems from 'Utilities/Object/hasDifferentItems';
 import selectUniqueIds from 'Utilities/Object/selectUniqueIds';
+import withCurrentPage from 'Components/withCurrentPage';
 import createCommandExecutingSelector from 'Store/Selectors/createCommandExecutingSelector';
 import * as wantedActions from 'Store/Actions/wantedActions';
 import { executeCommand } from 'Store/Actions/commandActions';
@@ -42,8 +43,19 @@ class CutoffUnmetConnector extends Component {
   // Lifecycle
 
   componentDidMount() {
+    const {
+      useCurrentPage,
+      fetchCutoffUnmet,
+      gotoCutoffUnmetFirstPage
+    } = this.props;
+
     registerPagePopulator(this.repopulate, ['episodeFileUpdated']);
-    this.props.gotoCutoffUnmetFirstPage();
+
+    if (useCurrentPage) {
+      fetchCutoffUnmet();
+    } else {
+      gotoCutoffUnmetFirstPage();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -166,4 +178,6 @@ CutoffUnmetConnector.propTypes = {
   clearEpisodeFiles: PropTypes.func.isRequired
 };
 
-export default connect(createMapStateToProps, mapDispatchToProps)(CutoffUnmetConnector);
+export default withCurrentPage(
+  connect(createMapStateToProps, mapDispatchToProps)(CutoffUnmetConnector)
+);

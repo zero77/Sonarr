@@ -5,6 +5,7 @@ import { createSelector } from 'reselect';
 import { registerPagePopulator, unregisterPagePopulator } from 'Utilities/pagePopulator';
 import hasDifferentItems from 'Utilities/Object/hasDifferentItems';
 import selectUniqueIds from 'Utilities/Object/selectUniqueIds';
+import withCurrentPage from 'Components/withCurrentPage';
 import * as historyActions from 'Store/Actions/historyActions';
 import { fetchEpisodes, clearEpisodes } from 'Store/Actions/episodeActions';
 import History from './History';
@@ -36,8 +37,19 @@ class HistoryConnector extends Component {
   // Lifecycle
 
   componentDidMount() {
+    const {
+      useCurrentPage,
+      fetchHistory,
+      gotoHistoryFirstPage
+    } = this.props;
+
     registerPagePopulator(this.repopulate);
-    this.props.gotoHistoryFirstPage();
+
+    if (useCurrentPage) {
+      fetchHistory();
+    } else {
+      gotoHistoryFirstPage();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -140,4 +152,6 @@ HistoryConnector.propTypes = {
   clearEpisodes: PropTypes.func.isRequired
 };
 
-export default connect(createMapStateToProps, mapDispatchToProps)(HistoryConnector);
+export default withCurrentPage(
+  connect(createMapStateToProps, mapDispatchToProps)(HistoryConnector)
+);

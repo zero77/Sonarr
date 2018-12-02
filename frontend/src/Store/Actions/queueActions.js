@@ -429,7 +429,9 @@ export const reducers = createHandleActions({
     isFetching: false,
     isPopulated: false,
     error: null,
-    items: []
+    items: [],
+    totalPages: 0,
+    totalRecords: 0
   })
 
 }, defaultState, section);

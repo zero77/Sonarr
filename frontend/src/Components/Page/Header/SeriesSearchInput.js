@@ -91,7 +91,11 @@ class SeriesSearchInput extends Component {
   //
   // Listeners
 
-  onChange = (event, { newValue }) => {
+  onChange = (event, { newValue, method }) => {
+    if (method === 'up' || method === 'down') {
+      return;
+    }
+
     this.setState({ value: newValue });
   }
 
@@ -138,6 +142,14 @@ class SeriesSearchInput extends Component {
       // Check the title first and if there isn't a match fallback to
       // the alternate titles and finally the tags.
 
+      if (value.length === 1) {
+        return (
+          series.cleanTitle.startsWith(lowerCaseValue) ||
+          series.alternateTitles.some((alternateTitle) => alternateTitle.cleanTitle.startsWith(lowerCaseValue)) ||
+          series.tags.some((tag) => tag.cleanLabel.startsWith(lowerCaseValue))
+        );
+      }
+
       return (
         series.cleanTitle.contains(lowerCaseValue) ||
         series.alternateTitles.some((alternateTitle) => alternateTitle.cleanTitle.contains(lowerCaseValue)) ||
@@ -149,7 +161,9 @@ class SeriesSearchInput extends Component {
   }
 
   onSuggestionsClearRequested = () => {
-    this.reset();
+    this.setState({
+      suggestions: []
+    });
   }
 
   onSuggestionSelected = (event, { suggestion }) => {

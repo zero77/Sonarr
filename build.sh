@@ -270,6 +270,7 @@ PackageMacOS()
     echo "Adding Startup script"
     cp ./macOS/Sonarr $outputFolderMacOS
     dos2unix $outputFolderMacOS/Sonarr
+    chmod +x $outputFolderMacOS/Sonarr
 
     echo "Copying Binaries"
     cp -r $outputFolderLinux/* $outputFolderMacOS

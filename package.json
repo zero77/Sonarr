@@ -8,7 +8,9 @@
     "watch": "gulp watch",
     "lint": "esprint check",
     "lint-fix": "eslint start --fix",
-    "stylelint": "stylelint frontend/**/*.css --config frontend/.stylelintrc"
+    "stylelint": "stylelint frontend/**/*.css --config frontend/.stylelintrc",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "repository": "https://github.com/Sonarr/Sonarr",
   "author": "Team Sonarr",
@@ -71,7 +73,7 @@
     "history": "4.9.0",
     "html-webpack-plugin": "3.2.0",
     "jdu": "1.0.0",
-    "jquery": "3.4.1",
+    "jquery": "3.5.0",
     "loader-utils": "^1.1.0",
     "lodash": "4.17.14",
     "mini-css-extract-plugin": "0.8.0",
@@ -124,7 +126,8 @@
     "url-loader": "2.0.1",
     "webpack": "4.35.3",
     "webpack-stream": "5.2.1",
-    "worker-loader": "2.0.0"
+    "worker-loader": "2.0.0",
+    "snyk": "^1.316.1"
   },
   "main": "index.js",
   "browserslist": [
@@ -132,5 +135,6 @@
     "not ie 11",
     "not op_mini all",
     "not chrome < 60"
-  ]
+  ],
+  "snyk": true
 }

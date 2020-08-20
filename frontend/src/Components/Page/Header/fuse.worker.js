@@ -3,9 +3,8 @@ import Fuse from 'fuse.js';
 const fuseOptions = {
   shouldSort: true,
   includeMatches: true,
+  ignoreLocation: true,
   threshold: 0.3,
-  location: 0,
-  distance: 100,
   maxPatternLength: 32,
   minMatchCharLength: 1,
   keys: [
@@ -49,7 +48,7 @@ function getSuggestions(series, value) {
   return suggestions;
 }
 
-self.addEventListener('message', (e) => {
+onmessage = function(e) {
   if (!e) {
     return;
   }
@@ -59,5 +58,12 @@ self.addEventListener('message', (e) => {
     value
   } = e.data;
 
-  self.postMessage(getSuggestions(series, value));
-});
+  const suggestions = getSuggestions(series, value);
+
+  const results = {
+    value,
+    suggestions
+  };
+
+  self.postMessage(results);
+};

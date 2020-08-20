@@ -31,8 +31,9 @@ namespace NzbDrone.Common.Disk
 
         public abstract long? GetAvailableSpace(string path);
         public abstract void InheritFolderPermissions(string filename);
-        public abstract void SetPermissions(string path, string mask, string user, string group);
-        public abstract void CopyPermissions(string sourcePath, string targetPath, bool includeOwner);
+        public abstract void SetEveryonePermissions(string filename);
+        public abstract void SetPermissions(string path, string mask);
+        public abstract void CopyPermissions(string sourcePath, string targetPath);
         public abstract long? GetTotalSize(string path);
 
         public DateTime FolderGetCreationTime(string path)
@@ -141,6 +142,13 @@ namespace NzbDrone.Common.Disk
             }
         }
 
+        public bool FolderEmpty(string path)
+        {
+            Ensure.That(path, () => path).IsValidPath();
+
+            return Directory.EnumerateFileSystemEntries(path).Empty();
+        }
+
         public string[] GetDirectories(string path)
         {
             Ensure.That(path, () => path).IsValidPath();
@@ -189,6 +197,24 @@ namespace NzbDrone.Common.Disk
             RemoveReadOnly(path);
 
             File.Delete(path);
+        }
+
+        public void CloneFile(string source, string destination, bool overwrite = false)
+        {
+            Ensure.That(source, () => source).IsValidPath();
+            Ensure.That(destination, () => destination).IsValidPath();
+
+            if (source.PathEquals(destination))
+            {
+                throw new IOException(string.Format("Source and destination can't be the same {0}", source));
+            }
+
+            CloneFileInternal(source, destination, overwrite);
+        }
+
+        protected virtual void CloneFileInternal(string source, string destination, bool overwrite = false)
+        {
+            CopyFileInternal(source, destination, overwrite);
         }
 
         public void CopyFile(string source, string destination, bool overwrite = false)
@@ -241,7 +267,17 @@ namespace NzbDrone.Common.Disk
             File.Move(source, destination);
         }
 
+        public virtual bool TryRenameFile(string source, string destination)
+        {
+            return false;
+        }
+
         public abstract bool TryCreateHardLink(string source, string destination);
+
+        public virtual bool TryCreateRefLink(string source, string destination)
+        {
+            return false;
+        }
 
         public void DeleteFolder(string path, bool recursive)
         {
@@ -315,42 +351,6 @@ namespace NzbDrone.Common.Disk
             }
 
             return parent.FullName;
-        }
-
-        public void SetPermissions(string filename, WellKnownSidType accountSid, FileSystemRights rights, AccessControlType controlType)
-        {
-            try
-            {
-                var sid = new SecurityIdentifier(accountSid, null);
-
-                var directoryInfo = new DirectoryInfo(filename);
-                var directorySecurity = directoryInfo.GetAccessControl(AccessControlSections.Access);
-
-                var rules = directorySecurity.GetAccessRules(true, false, typeof(SecurityIdentifier));
-
-                if (rules.OfType<FileSystemAccessRule>().Any(acl => acl.AccessControlType == controlType && (acl.FileSystemRights & rights) == rights && acl.IdentityReference.Equals(sid)))
-                {
-                    return;
-                }
-
-                var accessRule = new FileSystemAccessRule(sid, rights,
-                                                          InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
-                                                          PropagationFlags.InheritOnly, controlType);
-
-                bool modified;
-                directorySecurity.ModifyAccessRule(AccessControlModification.Add, accessRule, out modified);
-
-                if (modified)
-                {
-                    directoryInfo.SetAccessControl(directorySecurity);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Warn(e, "Couldn't set permission for {0}. account:{1} rights:{2} accessControlType:{3}", filename, accountSid, rights, controlType);
-                throw;
-            }
-
         }
 
         private static void RemoveReadOnly(string path)
@@ -482,14 +482,21 @@ namespace NzbDrone.Common.Disk
 
         public void RemoveEmptySubfolders(string path)
         {
-            var subfolders = Directory.GetDirectories(path, "*", SearchOption.AllDirectories);
-            var files = GetFiles(path, SearchOption.AllDirectories);
-
-            foreach (var subfolder in subfolders)
+            // Depth first search for empty subdirectories
+            foreach (var subdir in Directory.EnumerateDirectories(path))
             {
-                if (files.None(f => subfolder.IsParentPath(f)))
+                RemoveEmptySubfolders(subdir);
+
+                if (Directory.EnumerateFileSystemEntries(subdir).Empty())
                 {
-                    DeleteFolder(subfolder, false);
+                    try
+                    {
+                        Directory.Delete(subdir, false);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Warn(ex, "Failed to remove empty directory {0}", subdir);
+                    }
                 }
             }
         }
@@ -500,6 +507,11 @@ namespace NzbDrone.Common.Disk
             {
                 stream.CopyTo(fileStream);
             }
+        }
+
+        public virtual bool IsValidFilePermissionMask(string mask)
+        {
+            throw new NotSupportedException();
         }
     }
 }

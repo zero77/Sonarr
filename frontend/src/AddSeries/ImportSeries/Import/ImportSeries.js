@@ -5,7 +5,7 @@ import selectAll from 'Utilities/Table/selectAll';
 import toggleSelected from 'Utilities/Table/toggleSelected';
 import LoadingIndicator from 'Components/Loading/LoadingIndicator';
 import PageContent from 'Components/Page/PageContent';
-import PageContentBodyConnector from 'Components/Page/PageContentBodyConnector';
+import PageContentBody from 'Components/Page/PageContentBody';
 import ImportSeriesTableConnector from './ImportSeriesTableConnector';
 import ImportSeriesFooterConnector from './ImportSeriesFooterConnector';
 
@@ -97,29 +97,37 @@ class ImportSeries extends Component {
 
     return (
       <PageContent title="Import Series">
-        <PageContentBodyConnector
+        <PageContentBody
           registerScroller={this.setScrollerRef}
           onScroll={this.onScroll}
         >
           {
-            rootFoldersFetching && !rootFoldersPopulated &&
-              <LoadingIndicator />
+            rootFoldersFetching ? <LoadingIndicator /> : null
           }
 
           {
-            !rootFoldersFetching && !!rootFoldersError &&
-              <div>Unable to load root folders</div>
+            !rootFoldersFetching && !!rootFoldersError ?
+              <div>Unable to load root folders</div> :
+              null
           }
 
           {
-            !rootFoldersError && rootFoldersPopulated && !unmappedFolders.length &&
+            !rootFoldersError &&
+            !rootFoldersFetching &&
+            rootFoldersPopulated &&
+            !unmappedFolders.length ?
               <div>
                 All series in {path} have been imported
-              </div>
+              </div> :
+              null
           }
 
           {
-            !rootFoldersError && rootFoldersPopulated && !!unmappedFolders.length && scroller &&
+            !rootFoldersError &&
+            !rootFoldersFetching &&
+            rootFoldersPopulated &&
+            !!unmappedFolders.length &&
+            scroller ?
               <ImportSeriesTableConnector
                 rootFolderId={rootFolderId}
                 unmappedFolders={unmappedFolders}
@@ -131,18 +139,22 @@ class ImportSeries extends Component {
                 onSelectAllChange={this.onSelectAllChange}
                 onSelectedChange={this.onSelectedChange}
                 onRemoveSelectedStateItem={this.onRemoveSelectedStateItem}
-              />
+              /> :
+              null
           }
-        </PageContentBodyConnector>
+        </PageContentBody>
 
         {
-          !rootFoldersError && rootFoldersPopulated && !!unmappedFolders.length &&
+          !rootFoldersError &&
+          !rootFoldersFetching &&
+          !!unmappedFolders.length ?
             <ImportSeriesFooterConnector
               selectedIds={this.getSelectedIds()}
               showLanguageProfile={showLanguageProfile}
               onInputChange={this.onInputChange}
               onImportPress={this.onImportPress}
-            />
+            /> :
+            null
         }
       </PageContent>
     );
